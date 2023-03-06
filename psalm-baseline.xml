@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.27.0@faf106e717c37b8c81721845dba9de3d8deed8ff">
+  <file src="src/Command/Wishlist/AddProductToWishlist.php">
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$wishlist</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Command/Wishlist/AddProductVariantToWishlist.php">
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$wishlist</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/CommandHandler/Wishlist/AddProductToWishlistHandler.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$product</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedInterface occurrences="1">
+      <code>AddProductToWishlistHandler</code>
+    </DeprecatedInterface>
+  </file>
+  <file src="src/CommandHandler/Wishlist/AddProductVariantToWishlistHandler.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$variant</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedInterface occurrences="1">
+      <code>AddProductVariantToWishlistHandler</code>
+    </DeprecatedInterface>
+  </file>
+  <file src="src/CommandHandler/Wishlist/CreateWishlistHandler.php">
+    <DeprecatedInterface occurrences="1">
+      <code>CreateWishlistHandler</code>
+    </DeprecatedInterface>
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$wishlist</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>WishlistInterface</code>
+    </MoreSpecificReturnType>
+  </file>
+  <file src="src/CommandHandler/Wishlist/RemoveProductFromWishlistHandler.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$wishlistProduct</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedInterface occurrences="1">
+      <code>RemoveProductFromWishlistHandler</code>
+    </DeprecatedInterface>
+  </file>
+  <file src="src/CommandHandler/Wishlist/RemoveProductVariantFromWishlistHandler.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$variant</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedInterface occurrences="1">
+      <code>RemoveProductVariantFromWishlistHandler</code>
+    </DeprecatedInterface>
+  </file>
+  <file src="src/CommandHandler/Wishlist/RemoveWishlistHandler.php">
+    <DeprecatedInterface occurrences="1">
+      <code>RemoveWishlistHandler</code>
+    </DeprecatedInterface>
+  </file>
+  <file src="src/Context/WishlistContext.php">
+    <InvalidArgument occurrences="2">
+      <code>$cookieWishlistToken</code>
+      <code>$cookieWishlistToken</code>
+    </InvalidArgument>
+    <LessSpecificReturnStatement occurrences="3">
+      <code>$this-&gt;wishlistFactory-&gt;createNew()</code>
+      <code>$this-&gt;wishlistFactory-&gt;createNew()</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>WishlistInterface</code>
+    </MoreSpecificReturnType>
+    <NullableReturnStatement occurrences="2"/>
+  </file>
+  <file src="src/Controller/Action/AddProductToWishlistAction.php">
+    <InternalMethod occurrences="1">
+      <code>get</code>
+    </InternalMethod>
+    <PossiblyNullArgument occurrences="1">
+      <code>$wishlist</code>
+    </PossiblyNullArgument>
+    <UnnecessaryVarAnnotation occurrences="1">
+      <code>WishlistProductInterface</code>
+    </UnnecessaryVarAnnotation>
+  </file>
+  <file src="src/Controller/Action/AddProductVariantToWishlistAction.php">
+    <InternalMethod occurrences="1">
+      <code>get</code>
+    </InternalMethod>
+    <PossiblyNullArgument occurrences="1">
+      <code>$wishlist</code>
+    </PossiblyNullArgument>
+    <UnnecessaryVarAnnotation occurrences="1">
+      <code>WishlistProductInterface</code>
+    </UnnecessaryVarAnnotation>
+  </file>
+  <file src="src/Controller/Action/ListWishlistProductsAction.php">
+    <PossiblyNullReference occurrences="1">
+      <code>getWishlistProducts</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>getMessage</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="src/Controller/Action/RemoveProductFromWishlistAction.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>null === $product</code>
+    </DocblockTypeContradiction>
+    <InternalMethod occurrences="1">
+      <code>get</code>
+    </InternalMethod>
+    <MixedArgument occurrences="1">
+      <code>$wishlistProduct</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$wishlistProduct</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getProduct</code>
+    </MixedMethodCall>
+    <PossiblyNullReference occurrences="1">
+      <code>getWishlistProducts</code>
+    </PossiblyNullReference>
+  </file>
+  <file src="src/Controller/Action/RemoveProductVariantFromWishlistAction.php">
+    <InternalMethod occurrences="1">
+      <code>get</code>
+    </InternalMethod>
+    <MixedArgument occurrences="1">
+      <code>$wishlistProduct</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$wishlistProduct</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getVariant</code>
+    </MixedMethodCall>
+    <PossiblyNullReference occurrences="1">
+      <code>getWishlistProducts</code>
+    </PossiblyNullReference>
+  </file>
+  <file src="src/Controller/OrderItemController.php">
+    <PossiblyNullArgument occurrences="1">
+      <code>$configuration-&gt;getFormType()</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/DataTransformer/Wishlist/WishlistTokenValueAwareInputCommandDataTransformer.php">
+    <MissingParamType occurrences="1">
+      <code>$object</code>
+    </MissingParamType>
+    <MixedInferredReturnType occurrences="1">
+      <code>WishlistTokenValueAwareInterface</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="1">
+      <code>setWishlist</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="1">
+      <code>$object</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/DependencyInjection/BitBagSyliusWishlistExtension.php">
+    <MixedArgument occurrences="2">
+      <code>$config['resources']</code>
+      <code>$config['wishlist_cookie_token']</code>
+    </MixedArgument>
+    <PossiblyNullArgument occurrences="1">
+      <code>$this-&gt;getConfiguration([], $container)</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/DependencyInjection/Configuration.php">
+    <MixedMethodCall occurrences="74">
+      <code>addDefaultsIfNotSet</code>
+      <code>addDefaultsIfNotSet</code>
+      <code>addDefaultsIfNotSet</code>
+      <code>addDefaultsIfNotSet</code>
+      <code>addDefaultsIfNotSet</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>children</code>
+      <code>children</code>
+      <code>children</code>
+      <code>children</code>
+      <code>children</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>defaultValue</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>variableNode</code>
+      <code>variableNode</code>
+    </MixedMethodCall>
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>children</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="src/Entity/Wishlist.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>$this-&gt;wishlistProducts</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>Collection</code>
+    </InvalidReturnType>
+    <MixedAssignment occurrences="2">
+      <code>$products[]</code>
+      <code>$variants[]</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="5">
+      <code>getProduct</code>
+      <code>getProduct</code>
+      <code>getVariant</code>
+      <code>getVariant</code>
+      <code>getVariant</code>
+    </MixedMethodCall>
+    <ParamNameMismatch occurrences="1">
+      <code>$shopUser</code>
+    </ParamNameMismatch>
+    <PossiblyInvalidMethodCall occurrences="4">
+      <code>add</code>
+      <code>contains</code>
+      <code>removeElement</code>
+      <code>removeElement</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullArgument occurrences="1">
+      <code>$wishlistProduct-&gt;getVariant()</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Entity/WishlistInterface.php">
+    <MismatchingDocblockReturnType occurrences="3">
+      <code>Collection|ProductInterface[]</code>
+      <code>Collection|ProductVariantInterface[]</code>
+      <code>Collection|WishlistProductInterface[]</code>
+    </MismatchingDocblockReturnType>
+  </file>
+  <file src="src/Entity/WishlistProduct.php">
+    <InvalidNullableReturnType occurrences="1">
+      <code>ProductInterface</code>
+    </InvalidNullableReturnType>
+    <NullableReturnStatement occurrences="1">
+      <code>$this-&gt;product</code>
+    </NullableReturnStatement>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$wishlist</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/EventListener/MergeUserWishlistItemsListener.php">
+    <InvalidArgument occurrences="1">
+      <code>$cookieWishlistToken</code>
+    </InvalidArgument>
+    <MixedArgument occurrences="1">
+      <code>$wishlistProduct</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$wishlistProduct</code>
+    </MixedAssignment>
+    <UnnecessaryVarAnnotation occurrences="1">
+      <code>WishlistInterface|null</code>
+    </UnnecessaryVarAnnotation>
+  </file>
+  <file src="src/Factory/WishlistProductFactory.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>$product-&gt;getVariants()-&gt;first()</code>
+      <code>$variant-&gt;getProduct()</code>
+    </ArgumentTypeCoercion>
+    <PossiblyFalseArgument occurrences="1">
+      <code>$product-&gt;getVariants()-&gt;first()</code>
+    </PossiblyFalseArgument>
+    <PossiblyNullArgument occurrences="1">
+      <code>$variant-&gt;getProduct()</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Form/Type/AddProductsToCartType.php">
+    <MixedArgument occurrences="2">
+      <code>$key</code>
+      <code>$options['cart']</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$key</code>
+    </MixedAssignment>
+    <MixedPropertyTypeCoercion occurrences="1">
+      <code>$validationGroups</code>
+    </MixedPropertyTypeCoercion>
+    <UnnecessaryVarAnnotation occurrences="1">
+      <code>OrderItemInterface</code>
+    </UnnecessaryVarAnnotation>
+  </file>
+  <file src="src/Repository/WishlistRepository.php">
+    <MixedInferredReturnType occurrences="2">
+      <code>?WishlistInterface</code>
+      <code>?WishlistInterface</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="2"/>
+  </file>
+  <file src="src/Voter/WishlistVoter.php">
+    <DeprecatedClass occurrences="2">
+      <code>Security</code>
+      <code>Security</code>
+    </DeprecatedClass>
+    <MissingParamType occurrences="4">
+      <code>$attribute</code>
+      <code>$attribute</code>
+      <code>$subject</code>
+      <code>$subject</code>
+    </MissingParamType>
+    <MixedArgument occurrences="1">
+      <code>$attribute</code>
+    </MixedArgument>
+  </file>
+</files>

@@ -1,0 +1,356 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#2 \\$product of method BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistProductFactoryInterface\\:\\:createForWishlistAndProduct\\(\\) expects Sylius\\\\Component\\\\Core\\\\Model\\\\ProductInterface, Sylius\\\\Component\\\\Resource\\\\Model\\\\ResourceInterface given\\.$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/AddProductToWishlistHandler.php
+
+		-
+			message: "#^Parameter \\#2 \\$variant of method BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistProductFactoryInterface\\:\\:createForWishlistAndVariant\\(\\) expects Sylius\\\\Component\\\\Core\\\\Model\\\\ProductVariantInterface, Sylius\\\\Component\\\\Resource\\\\Model\\\\ResourceInterface given\\.$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/AddProductVariantToWishlistHandler.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\CommandHandler\\\\Wishlist\\\\CreateWishlistHandler\\:\\:__invoke\\(\\) should return BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface but returns object\\.$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/CreateWishlistHandler.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, Symfony\\\\Component\\\\Security\\\\Core\\\\Authentication\\\\Token\\\\TokenInterface\\|null given\\.$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/CreateWishlistHandler.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\CommandHandler\\\\Wishlist\\\\RemoveProductFromWishlistHandler\\:\\:__construct\\(\\) has parameter \\$wishlistProductRepository with generic interface Sylius\\\\Component\\\\Resource\\\\Repository\\\\RepositoryInterface but does not specify its types\\: T$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/RemoveProductFromWishlistHandler.php
+
+		-
+			message: "#^Parameter \\#1 \\$product of method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\:\\:removeProduct\\(\\) expects BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistProductInterface, object given\\.$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/RemoveProductFromWishlistHandler.php
+
+		-
+			message: "#^Property BitBag\\\\SyliusWishlistPlugin\\\\CommandHandler\\\\Wishlist\\\\RemoveProductFromWishlistHandler\\:\\:\\$wishlistProductRepository with generic interface Sylius\\\\Component\\\\Resource\\\\Repository\\\\RepositoryInterface does not specify its types\\: T$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/RemoveProductFromWishlistHandler.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\CommandHandler\\\\Wishlist\\\\RemoveProductVariantFromWishlistHandler\\:\\:__construct\\(\\) has parameter \\$wishlistProductRepository with generic interface Sylius\\\\Component\\\\Resource\\\\Repository\\\\RepositoryInterface but does not specify its types\\: T$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/RemoveProductVariantFromWishlistHandler.php
+
+		-
+			message: "#^Parameter \\#1 \\$variant of method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\:\\:removeProductVariant\\(\\) expects Sylius\\\\Component\\\\Core\\\\Model\\\\ProductVariantInterface, Sylius\\\\Component\\\\Resource\\\\Model\\\\ResourceInterface given\\.$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/RemoveProductVariantFromWishlistHandler.php
+
+		-
+			message: "#^Property BitBag\\\\SyliusWishlistPlugin\\\\CommandHandler\\\\Wishlist\\\\RemoveProductVariantFromWishlistHandler\\:\\:\\$wishlistProductRepository with generic interface Sylius\\\\Component\\\\Resource\\\\Repository\\\\RepositoryInterface does not specify its types\\: T$#"
+			count: 1
+			path: src/CommandHandler/Wishlist/RemoveProductVariantFromWishlistHandler.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Context\\\\WishlistContext\\:\\:getWishlist\\(\\) should return BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface but returns object\\.$#"
+			count: 3
+			path: src/Context/WishlistContext.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null given\\.$#"
+			count: 2
+			path: src/Context/WishlistContext.php
+
+		-
+			message: "#^Only booleans are allowed in a ternary operator condition, Symfony\\\\Component\\\\Security\\\\Core\\\\Authentication\\\\Token\\\\TokenInterface\\|null given\\.$#"
+			count: 1
+			path: src/Context/WishlistContext.php
+
+		-
+			message: "#^Parameter \\#1 \\$token of method BitBag\\\\SyliusWishlistPlugin\\\\Repository\\\\WishlistRepositoryInterface\\:\\:findByToken\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
+			count: 2
+			path: src/Context/WishlistContext.php
+
+		-
+			message: "#^Cannot call method addWishlistProduct\\(\\) on BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductToWishlistAction.php
+
+		-
+			message: "#^Cannot call method getId\\(\\) on BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductToWishlistAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$object of method Doctrine\\\\Persistence\\\\ObjectManager\\:\\:persist\\(\\) expects object, BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null given\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductToWishlistAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$wishlist of method BitBag\\\\SyliusWishlistPlugin\\\\Controller\\\\Action\\\\AddProductToWishlistAction\\:\\:addWishlistToResponseCookie\\(\\) expects BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface, BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null given\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductToWishlistAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$wishlist of method BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistProductFactoryInterface\\:\\:createForWishlistAndProduct\\(\\) expects BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface, BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null given\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductToWishlistAction.php
+
+		-
+			message: "#^Cannot call method addWishlistProduct\\(\\) on BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductVariantToWishlistAction.php
+
+		-
+			message: "#^Cannot call method getId\\(\\) on BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductVariantToWishlistAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$object of method Doctrine\\\\Persistence\\\\ObjectManager\\:\\:persist\\(\\) expects object, BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null given\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductVariantToWishlistAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$wishlist of method BitBag\\\\SyliusWishlistPlugin\\\\Controller\\\\Action\\\\AddProductVariantToWishlistAction\\:\\:addWishlistToResponseCookie\\(\\) expects BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface, BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null given\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductVariantToWishlistAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$wishlist of method BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistProductFactoryInterface\\:\\:createForWishlistAndVariant\\(\\) expects BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface, BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null given\\.$#"
+			count: 1
+			path: src/Controller/Action/AddProductVariantToWishlistAction.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 1
+			path: src/Controller/Action/ApiPlatform/RemoveProductFromWishlistAction.php
+
+		-
+			message: "#^Cannot cast mixed to string\\.$#"
+			count: 1
+			path: src/Controller/Action/ApiPlatform/RemoveProductFromWishlistAction.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 1
+			path: src/Controller/Action/ApiPlatform/RemoveProductVariantFromWishlistAction.php
+
+		-
+			message: "#^Cannot cast mixed to string\\.$#"
+			count: 1
+			path: src/Controller/Action/ApiPlatform/RemoveProductVariantFromWishlistAction.php
+
+		-
+			message: "#^Cannot cast mixed to string\\.$#"
+			count: 1
+			path: src/Controller/Action/ApiPlatform/RemoveWishlistAction.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: src/Controller/Action/ListWishlistProductsAction.php
+
+		-
+			message: "#^Call to an undefined method Symfony\\\\Component\\\\Form\\\\FormError\\|Symfony\\\\Component\\\\Form\\\\FormErrorIterator\\:\\:getMessage\\(\\)\\.$#"
+			count: 1
+			path: src/Controller/Action/ListWishlistProductsAction.php
+
+		-
+			message: "#^Cannot call method getWishlistProducts\\(\\) on BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null\\.$#"
+			count: 1
+			path: src/Controller/Action/ListWishlistProductsAction.php
+
+		-
+			message: "#^Cannot call method getWishlistProducts\\(\\) on BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null\\.$#"
+			count: 1
+			path: src/Controller/Action/RemoveProductFromWishlistAction.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between null and Sylius\\\\Component\\\\Core\\\\Model\\\\ProductInterface will always evaluate to false\\.$#"
+			count: 1
+			path: src/Controller/Action/RemoveProductFromWishlistAction.php
+
+		-
+			message: "#^Cannot call method getWishlistProducts\\(\\) on BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null\\.$#"
+			count: 1
+			path: src/Controller/Action/RemoveProductVariantFromWishlistAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$type of method Symfony\\\\Component\\\\Form\\\\FormFactoryInterface\\:\\:create\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Controller/OrderItemController.php
+
+		-
+			message: "#^Cannot call method setWishlist\\(\\) on mixed\\.$#"
+			count: 1
+			path: src/DataTransformer/Wishlist/WishlistTokenValueAwareInputCommandDataTransformer.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\DataTransformer\\\\Wishlist\\\\WishlistTokenValueAwareInputCommandDataTransformer\\:\\:supportsTransformation\\(\\) has parameter \\$object with no type specified\\.$#"
+			count: 1
+			path: src/DataTransformer/Wishlist/WishlistTokenValueAwareInputCommandDataTransformer.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\DataTransformer\\\\Wishlist\\\\WishlistTokenValueAwareInputCommandDataTransformer\\:\\:transform\\(\\) should return BitBag\\\\SyliusWishlistPlugin\\\\Command\\\\Wishlist\\\\WishlistTokenValueAwareInterface but returns mixed\\.$#"
+			count: 1
+			path: src/DataTransformer/Wishlist/WishlistTokenValueAwareInputCommandDataTransformer.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\Wishlist\\:\\:getProducts\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+			count: 1
+			path: src/Entity/Wishlist.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\Wishlist\\:\\:getWishlistProducts\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+			count: 1
+			path: src/Entity/Wishlist.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\Wishlist\\:\\:setWishlistProducts\\(\\) has parameter \\$wishlistProducts with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
+			count: 1
+			path: src/Entity/Wishlist.php
+
+		-
+			message: "#^Parameter \\#1 \\$productVariant of method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\Wishlist\\:\\:hasProductVariant\\(\\) expects Sylius\\\\Component\\\\Core\\\\Model\\\\ProductVariantInterface, Sylius\\\\Component\\\\Core\\\\Model\\\\ProductVariantInterface\\|null given\\.$#"
+			count: 1
+			path: src/Entity/Wishlist.php
+
+		-
+			message: "#^Property BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\Wishlist\\:\\:\\$wishlistProducts with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+			count: 1
+			path: src/Entity/Wishlist.php
+
+		-
+			message: "#^Return type \\(Doctrine\\\\Common\\\\Collections\\\\Collection\\<int, Sylius\\\\Component\\\\Core\\\\Model\\\\ProductVariantInterface\\|null\\>\\) of method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\Wishlist\\:\\:getProductVariants\\(\\) should be covariant with return type \\(Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<Sylius\\\\Component\\\\Core\\\\Model\\\\ProductVariantInterface\\>\\) of method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\:\\:getProductVariants\\(\\)$#"
+			count: 1
+			path: src/Entity/Wishlist.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\:\\:getProductVariants\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+			count: 1
+			path: src/Entity/WishlistInterface.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\:\\:getProducts\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+			count: 1
+			path: src/Entity/WishlistInterface.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\:\\:getWishlistProducts\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+			count: 1
+			path: src/Entity/WishlistInterface.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\:\\:setWishlistProducts\\(\\) has parameter \\$wishlistProducts with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
+			count: 1
+			path: src/Entity/WishlistInterface.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistProduct\\:\\:getProduct\\(\\) should return Sylius\\\\Component\\\\Core\\\\Model\\\\ProductInterface but returns Sylius\\\\Component\\\\Core\\\\Model\\\\ProductInterface\\|null\\.$#"
+			count: 1
+			path: src/Entity/WishlistProduct.php
+
+		-
+			message: "#^Parameter \\#1 \\$token of method BitBag\\\\SyliusWishlistPlugin\\\\Repository\\\\WishlistRepositoryInterface\\:\\:findByToken\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
+			count: 1
+			path: src/EventListener/MergeUserWishlistItemsListener.php
+
+		-
+			message: "#^Property BitBag\\\\SyliusWishlistPlugin\\\\EventListener\\\\MergeUserWishlistItemsListener\\:\\:\\$wishlistFactory is never read, only written\\.$#"
+			count: 1
+			path: src/EventListener/MergeUserWishlistItemsListener.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistFactory\\:\\:__construct\\(\\) has parameter \\$wishlistFactory with generic interface Sylius\\\\Component\\\\Resource\\\\Factory\\\\FactoryInterface but does not specify its types\\: T$#"
+			count: 1
+			path: src/Factory/WishlistFactory.php
+
+		-
+			message: "#^Property BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistFactory\\:\\:\\$wishlistFactory with generic interface Sylius\\\\Component\\\\Resource\\\\Factory\\\\FactoryInterface does not specify its types\\: T$#"
+			count: 1
+			path: src/Factory/WishlistFactory.php
+
+		-
+			message: "#^Interface BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistFactoryInterface extends generic interface Sylius\\\\Component\\\\Resource\\\\Factory\\\\FactoryInterface but does not specify its types\\: T$#"
+			count: 1
+			path: src/Factory/WishlistFactoryInterface.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistProductFactory\\:\\:__construct\\(\\) has parameter \\$wishlistProductFactory with generic interface Sylius\\\\Component\\\\Resource\\\\Factory\\\\FactoryInterface but does not specify its types\\: T$#"
+			count: 1
+			path: src/Factory/WishlistProductFactory.php
+
+		-
+			message: "#^Parameter \\#1 \\$product of method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistProductInterface\\:\\:setProduct\\(\\) expects Sylius\\\\Component\\\\Core\\\\Model\\\\ProductInterface, Sylius\\\\Component\\\\Product\\\\Model\\\\ProductInterface\\|null given\\.$#"
+			count: 1
+			path: src/Factory/WishlistProductFactory.php
+
+		-
+			message: "#^Parameter \\#1 \\$variant of method BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistProductInterface\\:\\:setVariant\\(\\) expects Sylius\\\\Component\\\\Core\\\\Model\\\\ProductVariantInterface\\|null, Sylius\\\\Component\\\\Product\\\\Model\\\\ProductVariantInterface\\|false given\\.$#"
+			count: 1
+			path: src/Factory/WishlistProductFactory.php
+
+		-
+			message: "#^Property BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistProductFactory\\:\\:\\$wishlistProductFactory with generic interface Sylius\\\\Component\\\\Resource\\\\Factory\\\\FactoryInterface does not specify its types\\: T$#"
+			count: 1
+			path: src/Factory/WishlistProductFactory.php
+
+		-
+			message: "#^Interface BitBag\\\\SyliusWishlistPlugin\\\\Factory\\\\WishlistProductFactoryInterface extends generic interface Sylius\\\\Component\\\\Resource\\\\Factory\\\\FactoryInterface but does not specify its types\\: T$#"
+			count: 1
+			path: src/Factory/WishlistProductFactoryInterface.php
+
+		-
+			message: "#^Only booleans are allowed in a negated boolean, mixed given\\.$#"
+			count: 1
+			path: src/Form/Extension/AddToCartTypeExtension.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: src/Form/Type/AddProductsToCartType.php
+
+		-
+			message: "#^Parameter \\#1 \\$cart of method Sylius\\\\Bundle\\\\OrderBundle\\\\Factory\\\\AddToCartCommandFactoryInterface\\:\\:createWithCartAndCartItem\\(\\) expects Sylius\\\\Component\\\\Order\\\\Model\\\\OrderInterface, mixed given\\.$#"
+			count: 1
+			path: src/Form/Type/AddProductsToCartType.php
+
+		-
+			message: "#^Parameter \\#1 \\$child of method Symfony\\\\Component\\\\Form\\\\FormBuilderInterface\\:\\:add\\(\\) expects string\\|Symfony\\\\Component\\\\Form\\\\FormBuilderInterface, mixed given\\.$#"
+			count: 1
+			path: src/Form/Type/AddProductsToCartType.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Repository\\\\WishlistRepository\\:\\:findByToken\\(\\) should return BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null but returns mixed\\.$#"
+			count: 1
+			path: src/Repository/WishlistRepository.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Repository\\\\WishlistRepository\\:\\:findOneByShopUser\\(\\) should return BitBag\\\\SyliusWishlistPlugin\\\\Entity\\\\WishlistInterface\\|null but returns mixed\\.$#"
+			count: 1
+			path: src/Repository/WishlistRepository.php
+
+		-
+			message: "#^Interface BitBag\\\\SyliusWishlistPlugin\\\\Repository\\\\WishlistRepositoryInterface extends generic interface Sylius\\\\Component\\\\Resource\\\\Repository\\\\RepositoryInterface but does not specify its types\\: T$#"
+			count: 1
+			path: src/Repository/WishlistRepositoryInterface.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Voter\\\\WishlistVoter\\:\\:supports\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/Voter/WishlistVoter.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Voter\\\\WishlistVoter\\:\\:supports\\(\\) has parameter \\$subject with no type specified\\.$#"
+			count: 1
+			path: src/Voter/WishlistVoter.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Voter\\\\WishlistVoter\\:\\:voteOnAttribute\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/Voter/WishlistVoter.php
+
+		-
+			message: "#^Method BitBag\\\\SyliusWishlistPlugin\\\\Voter\\\\WishlistVoter\\:\\:voteOnAttribute\\(\\) has parameter \\$subject with no type specified\\.$#"
+			count: 1
+			path: src/Voter/WishlistVoter.php
