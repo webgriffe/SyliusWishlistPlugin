@@ -23,10 +23,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Webmozart\Assert\Assert;
 
 final class AddProductVariantToWishlistAction
 {
@@ -66,7 +68,9 @@ final class AddProductVariantToWishlistAction
         $this->wishlistManager = $wishlistManager;
         $this->urlGenerator = $urlGenerator;
         $this->wishlistCookieToken = $wishlistCookieToken;
-        $this->flashBag = $requestStack->getSession()->getFlashBag();
+        $session = $requestStack->getSession();
+        Assert::isInstanceOf($session, Session::class);
+        $this->flashBag = $session->getFlashBag();
         $this->translator = $translator;
     }
 
