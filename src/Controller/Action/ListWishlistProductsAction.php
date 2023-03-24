@@ -22,8 +22,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
+use Webmozart\Assert\Assert;
 
 final class ListWishlistProductsAction
 {
@@ -57,7 +59,9 @@ final class ListWishlistProductsAction
         $this->cartContext = $cartContext;
         $this->formFactory = $formFactory;
         $this->orderModifier = $orderModifier;
-        $this->flashBag = $requestStack->getSession()->getFlashBag();
+        $session = $requestStack->getSession();
+        Assert::isInstanceOf($session, Session::class);
+        $this->flashBag = $session->getFlashBag();
         $this->twigEnvironment = $twigEnvironment;
         $this->cartManager = $cartManager;
         $this->translator = $translator;

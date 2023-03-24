@@ -19,9 +19,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Webmozart\Assert\Assert;
 
 final class RemoveProductVariantFromWishlistAction
 {
@@ -49,7 +51,9 @@ final class RemoveProductVariantFromWishlistAction
         $this->productVariantRepository = $productVariantRepository;
         $this->wishlistProductManager = $wishlistProductManager;
         $this->urlGenerator = $urlGenerator;
-        $this->flashBag = $requestStack->getSession()->getFlashBag();
+        $session = $requestStack->getSession();
+        Assert::isInstanceOf($session, Session::class);
+        $this->flashBag = $session->getFlashBag();
         $this->translator = $translator;
     }
 

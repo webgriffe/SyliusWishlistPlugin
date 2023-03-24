@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Webmozart\Assert\Assert;
 
 final class RemoveProductFromWishlistAction
 {
@@ -50,7 +51,9 @@ final class RemoveProductFromWishlistAction
         $this->productRepository = $productRepository;
         $this->wishlistProductManager = $wishlistProductManager;
         $this->urlGenerator = $urlGenerator;
-        $this->flashBag = $requestStack->getSession()->getFlashBag();
+        $session = $requestStack->getSession();
+        Assert::isInstanceOf($session, Session::class);
+        $this->flashBag = $session->getFlashBag();
         $this->translator = $translator;
     }
 

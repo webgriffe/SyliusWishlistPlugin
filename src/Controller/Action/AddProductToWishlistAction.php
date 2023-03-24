@@ -28,6 +28,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Webmozart\Assert\Assert;
 
 final class AddProductToWishlistAction
 {
@@ -67,7 +68,9 @@ final class AddProductToWishlistAction
         $this->wishlistManager = $wishlistManager;
         $this->urlGenerator = $urlGenerator;
         $this->wishlistCookieToken = $wishlistCookieToken;
-        $this->flashBag = $requestStack->getSession()->getFlashBag();
+        $session = $requestStack->getSession();
+        Assert::isInstanceOf($session, Session::class);
+        $this->flashBag = $session->getFlashBag();
         $this->translator = $translator;
     }
 
