@@ -19,6 +19,7 @@ use Sylius\Component\Order\Modifier\OrderModifierInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -48,7 +49,7 @@ final class ListWishlistProductsAction
         FormFactoryInterface $formFactory,
         OrderModifierInterface $orderModifier,
         EntityManagerInterface $cartManager,
-        FlashBagInterface $flashBag,
+        RequestStack $requestStack,
         TranslatorInterface $translator,
         Environment $twigEnvironment
     ) {
@@ -56,7 +57,7 @@ final class ListWishlistProductsAction
         $this->cartContext = $cartContext;
         $this->formFactory = $formFactory;
         $this->orderModifier = $orderModifier;
-        $this->flashBag = $flashBag;
+        $this->flashBag = $requestStack->getSession()->getFlashBag();
         $this->twigEnvironment = $twigEnvironment;
         $this->cartManager = $cartManager;
         $this->translator = $translator;

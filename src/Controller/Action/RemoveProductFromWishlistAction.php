@@ -16,8 +16,10 @@ use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -40,7 +42,7 @@ final class RemoveProductFromWishlistAction
         WishlistContextInterface $wishlistContext,
         ProductRepositoryInterface $productRepository,
         EntityManagerInterface $wishlistProductManager,
-        FlashBagInterface $flashBag,
+        RequestStack $requestStack,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator
     ) {
@@ -48,7 +50,7 @@ final class RemoveProductFromWishlistAction
         $this->productRepository = $productRepository;
         $this->wishlistProductManager = $wishlistProductManager;
         $this->urlGenerator = $urlGenerator;
-        $this->flashBag = $flashBag;
+        $this->flashBag = $requestStack->getSession()->getFlashBag();
         $this->translator = $translator;
     }
 
