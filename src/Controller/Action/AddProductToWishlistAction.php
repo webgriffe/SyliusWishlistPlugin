@@ -20,8 +20,10 @@ use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -53,7 +55,7 @@ final class AddProductToWishlistAction
         WishlistContextInterface $wishlistContext,
         WishlistProductFactoryInterface $wishlistProductFactory,
         ObjectManager $wishlistManager,
-        FlashBagInterface $flashBag,
+        RequestStack $requestStack,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
         string $wishlistCookieToken
@@ -65,7 +67,7 @@ final class AddProductToWishlistAction
         $this->wishlistManager = $wishlistManager;
         $this->urlGenerator = $urlGenerator;
         $this->wishlistCookieToken = $wishlistCookieToken;
-        $this->flashBag = $flashBag;
+        $this->flashBag = $requestStack->getSession()->getFlashBag();
         $this->translator = $translator;
     }
 
