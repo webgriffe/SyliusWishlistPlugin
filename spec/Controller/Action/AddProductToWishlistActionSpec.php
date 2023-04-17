@@ -21,7 +21,9 @@ use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -37,15 +39,20 @@ final class AddProductToWishlistActionSpec extends ObjectBehavior
         ObjectManager $wishlistManager,
         FlashBagInterface $flashBag,
         TranslatorInterface $translator,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        RequestStack $requestStack,
+        Session $session,
     ): void {
+        $requestStack->getSession()->willReturn($session);
+        $session->getFlashBag()->willReturn($flashBag);
+
         $this->beConstructedWith(
             $tokenStorage,
             $productRepository,
             $wishlistContext,
             $wishlistProductFactory,
             $wishlistManager,
-            $flashBag,
+            $requestStack,
             $translator,
             $urlGenerator,
             'bitbag_wishlist_token'
