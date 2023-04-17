@@ -27,8 +27,10 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -42,15 +44,20 @@ final class ListWishlistProductsActionSpec extends ObjectBehavior
         EntityManagerInterface $cartManager,
         FlashBagInterface $flashBag,
         TranslatorInterface $translator,
-        Environment $twigEnvironment
+        Environment $twigEnvironment,
+        RequestStack $requestStack,
+        Session $session,
     ): void {
+        $requestStack->getSession()->willReturn($session);
+        $session->getFlashBag()->willReturn($flashBag);
+
         $this->beConstructedWith(
             $wishlistContext,
             $cartContext,
             $formFactory,
             $orderModifier,
             $cartManager,
-            $flashBag,
+            $requestStack,
             $translator,
             $twigEnvironment
         );
@@ -91,7 +98,9 @@ final class ListWishlistProductsActionSpec extends ObjectBehavior
         ;
         $form->isSubmitted()->willReturn(false);
         $form->createView()->willReturn($formView);
-        $form->getErrors()->willReturn($formErrorIterator);
+        $form->getErrors(true)->willReturn($formErrorIterator);
+        $form->getErrors()->willReturn(new FormErrorIterator($form->getWrappedObject(), []));
+
         $twigEnvironment
             ->render(
                 '@BitBagSyliusWishlistPlugin/WishlistDetails/index.html.twig',
@@ -103,7 +112,7 @@ final class ListWishlistProductsActionSpec extends ObjectBehavior
             ->willReturn('CONTENT')
         ;
 
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
 
         $this->__invoke($request)->shouldHaveType(Response::class);
     }
@@ -159,7 +168,7 @@ final class ListWishlistProductsActionSpec extends ObjectBehavior
         $addToCartCommand->getCart()->willReturn($cart);
         $addToCartCommand->getCartItem()->willReturn($cartItem);
 
-        $form->handleRequest($request)->shouldBeCalled();
+        $form->handleRequest($request)->shouldBeCalled()->willReturn($form);
         $orderModifier->addToOrder($cart, $cartItem)->shouldBeCalled();
         $cartManager->persist($cart)->shouldBeCalled();
         $cartManager->flush()->shouldBeCalled();
