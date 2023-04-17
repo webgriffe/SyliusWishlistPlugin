@@ -48,6 +48,9 @@ final class AddProductsToCartType extends AbstractType
     {
         /** @var WishlistProductInterface $wishlistProduct */
         foreach ($options['wishlist_products'] as $key => $wishlistProduct) {
+            if (is_int($key)) {
+                $key = (string) $key;
+            }
             $builder
                 ->add($key, AddToCartType::class, [
                     'label' => false,

@@ -32,8 +32,10 @@
                 </div>
             </div>
 
-            {% for childForm in form.children if childForm.vars.name != '_token' %}
-                {% include "@BitBagSyliusWishlistPlugin/WishlistDetails/_item.html.twig" %}
+            {% for childForm in form.children %}
+                {% if childForm.vars.name != '_token'  %}
+                    {% include "@BitBagSyliusWishlistPlugin/WishlistDetails/_item.html.twig" %}
+                {% endif %}
             {% endfor %}
 
             <div class="bb-wishlist-actions">
