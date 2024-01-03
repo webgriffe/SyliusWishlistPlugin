@@ -31,7 +31,7 @@ final class WishlistContext implements WishlistContextInterface
         TokenStorageInterface $tokenStorage,
         WishlistRepositoryInterface $wishlistRepository,
         WishlistFactoryInterface $wishlistFactory,
-        string $wishlistCookieToken
+        string $wishlistCookieToken,
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->wishlistRepository = $wishlistRepository;

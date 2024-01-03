@@ -42,7 +42,7 @@ final class Loginer implements LoginerInterface
         RepositoryInterface $shopUserRepository,
         TokenStorageInterface $tokenStorage,
         LoginPageInterface $loginPage,
-        HomePageInterface $homePage
+        HomePageInterface $homePage,
     ) {
         $this->customerFactory = $customerFactory;
         $this->shopUserFactory = $shopUserFactory;

@@ -29,7 +29,7 @@ final class AddProductToWishlistHandler implements MessageHandlerInterface
     public function __construct(
         WishlistProductFactoryInterface $wishlistProductFactory,
         ProductRepositoryInterface $productRepository,
-        ObjectManager $wishlistManager
+        ObjectManager $wishlistManager,
     ) {
         $this->wishlistProductFactory = $wishlistProductFactory;
         $this->productRepository = $productRepository;
@@ -45,7 +45,7 @@ final class AddProductToWishlistHandler implements MessageHandlerInterface
 
         if (null === $product) {
             throw new ProductNotFoundException(
-                sprintf('The Product %s does not exist', $productId)
+                sprintf('The Product %s does not exist', $productId),
             );
         }
 

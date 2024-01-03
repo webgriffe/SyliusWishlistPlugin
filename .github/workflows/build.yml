@@ -6,7 +6,7 @@ on:
             - 'dependabot/**'
     pull_request: ~
     release:
-        types: [created]
+        types: [ created ]
     schedule:
         -
             cron: "0 1 * * 6" # Run at 1am every Saturday
@@ -21,11 +21,11 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ["8.2", "8.3"]
-                symfony: ["^6.4", "^7.0"]
-                sylius: ["^1.12"]
-                node: ["16.x"]
-                mysql: ["5.7", "8.0"]
+                php: [ "8.2", "8.3" ]
+                symfony: [ "^6.4", "^7.0" ]
+                sylius: [ "^1.12" ]
+                node: [ "16.x" ]
+                mysql: [ "5.7", "8.0" ]
 
         env:
             APP_ENV: test
@@ -159,6 +159,10 @@ jobs:
             -
                 name: Validate database schema
                 run: (cd tests/Application && bin/console doctrine:schema:validate)
+
+            -
+                name: Check Coding Standard
+                run: vendor/bin/ecs
 
             -
                 name: Run PHPStan

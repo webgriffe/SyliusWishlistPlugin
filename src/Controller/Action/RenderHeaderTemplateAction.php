@@ -34,7 +34,7 @@ final class RenderHeaderTemplateAction
         return new Response(
             $this->twigEnvironment->render('@BitBagSyliusWishlistPlugin/Common/widget.html.twig', [
                 'wishlist' => $wishlist,
-            ])
+            ]),
         );
     }
 }

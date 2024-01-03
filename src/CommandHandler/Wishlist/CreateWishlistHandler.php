@@ -33,7 +33,7 @@ final class CreateWishlistHandler implements MessageHandlerInterface
         TokenStorageInterface $tokenStorage,
         WishlistFactoryInterface $wishlistFactory,
         ShopUserWishlistResolverInterface $shopUserWishlistResolver,
-        ObjectManager $wishlistManager
+        ObjectManager $wishlistManager,
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->wishlistFactory = $wishlistFactory;

@@ -45,7 +45,7 @@ final class RemoveProductVariantFromWishlistAction
         EntityManagerInterface $wishlistProductManager,
         RequestStack $requestStack,
         TranslatorInterface $translator,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
     ) {
         $this->wishlistContext = $wishlistContext;
         $this->productVariantRepository = $productVariantRepository;

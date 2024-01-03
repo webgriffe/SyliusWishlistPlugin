@@ -53,7 +53,7 @@ final class WishlistContext extends MinkContext implements Context
         WishlistRepositoryInterface $wishlistRepository,
         UserRepositoryInterface $userRepository,
         ClientInterface $client,
-        RouterInterface $router
+        RouterInterface $router,
     ) {
         $this->client = $client;
         $this->wishlistRepository = $wishlistRepository;
@@ -86,7 +86,7 @@ final class WishlistContext extends MinkContext implements Context
             [
                 'headers' => $headers,
                 'body' => json_encode($body),
-            ]
+            ],
         );
         Assert::eq($response->getStatusCode(), 200);
 
@@ -116,7 +116,7 @@ final class WishlistContext extends MinkContext implements Context
         $response = $this->client->request(
             self::POST,
             sprintf('%s%s', self::$domain, $uri),
-            $this->getOptions(self::POST, [])
+            $this->getOptions(self::POST, []),
         );
 
         $jsonBody = json_decode((string) $response->getBody());
@@ -157,9 +157,10 @@ final class WishlistContext extends MinkContext implements Context
         }
 
         throw new \Exception(
-            sprintf('Product %s was not found in the wishlist',
-                $product->getName()
-            )
+            sprintf(
+                'Product %s was not found in the wishlist',
+                $product->getName(),
+            ),
         );
     }
 
@@ -190,9 +191,10 @@ final class WishlistContext extends MinkContext implements Context
         }
 
         throw new \Exception(
-            sprintf('Product variant %s was not found in the wishlist',
-                $variant->getName()
-            )
+            sprintf(
+                'Product variant %s was not found in the wishlist',
+                $variant->getName(),
+            ),
         );
     }
 
@@ -209,7 +211,7 @@ final class WishlistContext extends MinkContext implements Context
         $response = $this->client->request(
             self::DELETE,
             sprintf('%s%s', self::$domain, $uri),
-            $this->getOptions(self::DELETE, [])
+            $this->getOptions(self::DELETE, []),
         );
 
         Assert::eq($response->getStatusCode(), 204);
@@ -250,7 +252,7 @@ final class WishlistContext extends MinkContext implements Context
         $response = $this->client->request(
             self::DELETE,
             sprintf('%s%s', self::$domain, $uri),
-            $this->getOptions(self::DELETE)
+            $this->getOptions(self::DELETE),
         );
 
         Assert::eq($response->getStatusCode(), 204);
@@ -340,7 +342,7 @@ final class WishlistContext extends MinkContext implements Context
         return $this->client->request(
             self::PATCH,
             sprintf('%s%s', self::$domain, $uri),
-            $this->getOptions(self::PATCH, $body)
+            $this->getOptions(self::PATCH, $body),
         );
     }
 
@@ -357,7 +359,7 @@ final class WishlistContext extends MinkContext implements Context
         return $this->client->request(
             self::PATCH,
             sprintf('%s%s', self::$domain, $uri),
-            $this->getOptions(self::PATCH, $body)
+            $this->getOptions(self::PATCH, $body),
         );
     }
 
@@ -374,7 +376,7 @@ final class WishlistContext extends MinkContext implements Context
         return $this->client->request(
             self::DELETE,
             sprintf('%s%s', self::$domain, $uri),
-            $this->getOptions(self::DELETE)
+            $this->getOptions(self::DELETE),
         );
     }
 }

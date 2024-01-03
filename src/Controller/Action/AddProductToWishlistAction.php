@@ -59,7 +59,7 @@ final class AddProductToWishlistAction
         RequestStack $requestStack,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
-        string $wishlistCookieToken
+        string $wishlistCookieToken,
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->productRepository = $productRepository;

@@ -27,7 +27,7 @@ final class WishlistCreator implements WishlistCreatorInterface
     public function __construct(
         WishlistFactoryInterface $wishlistFactory,
         WishlistProductFactoryInterface $wishlistProductFactory,
-        RepositoryInterface $wishlistRepository
+        RepositoryInterface $wishlistRepository,
     ) {
         $this->wishlistFactory = $wishlistFactory;
         $this->wishlistProductFactory = $wishlistProductFactory;

@@ -45,7 +45,7 @@ final class WishlistContext implements Context
         WishlistPageInterface $wishlistPage,
         NotificationCheckerInterface $notificationChecker,
         LoginerInterface $loginer,
-        WishlistCreatorInterface $wishlistCreator
+        WishlistCreatorInterface $wishlistCreator,
     ) {
         $this->productRepository = $productRepository;
         $this->productIndexPage = $productIndexPage;
@@ -211,7 +211,7 @@ final class WishlistContext implements Context
     {
         Assert::true(
             $this->wishlistPage->hasProductInCart($productName),
-            sprintf('Product %s was not found in the cart.', $productName)
+            sprintf('Product %s was not found in the cart.', $productName),
         );
     }
 

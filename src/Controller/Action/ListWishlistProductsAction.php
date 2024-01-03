@@ -53,7 +53,7 @@ final class ListWishlistProductsAction
         EntityManagerInterface $cartManager,
         RequestStack $requestStack,
         TranslatorInterface $translator,
-        Environment $twigEnvironment
+        Environment $twigEnvironment,
     ) {
         $this->wishlistContext = $wishlistContext;
         $this->cartContext = $cartContext;
@@ -80,7 +80,6 @@ final class ListWishlistProductsAction
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             if ($this->handleCartItems($form)) {
                 $this->flashBag->add('success', $this->translator->trans('bitbag_sylius_wishlist_plugin.ui.added_to_cart'));
             } else {
@@ -91,7 +90,7 @@ final class ListWishlistProductsAction
                 $this->twigEnvironment->render('@BitBagSyliusWishlistPlugin/WishlistDetails/index.html.twig', [
                     'wishlist' => $wishlist,
                     'form' => $form->createView(),
-                ])
+                ]),
             );
         }
 
@@ -103,7 +102,7 @@ final class ListWishlistProductsAction
             $this->twigEnvironment->render('@BitBagSyliusWishlistPlugin/WishlistDetails/index.html.twig', [
                 'wishlist' => $wishlist,
                 'form' => $form->createView(),
-            ])
+            ]),
         );
     }
 

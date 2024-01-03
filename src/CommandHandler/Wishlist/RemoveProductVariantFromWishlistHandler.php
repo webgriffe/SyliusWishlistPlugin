@@ -34,7 +34,7 @@ final class RemoveProductVariantFromWishlistHandler implements MessageHandlerInt
         WishlistRepositoryInterface $wishlistRepository,
         ProductVariantRepositoryInterface $productVariantRepository,
         RepositoryInterface $wishlistProductRepository,
-        ObjectManager $wishlistManager
+        ObjectManager $wishlistManager,
     ) {
         $this->wishlistRepository = $wishlistRepository;
         $this->productVariantRepository = $productVariantRepository;
@@ -54,13 +54,13 @@ final class RemoveProductVariantFromWishlistHandler implements MessageHandlerInt
 
         if (null === $variant || null === $wishlistProduct) {
             throw new ProductVariantNotFoundException(
-                sprintf('The Product %s does not exist', $variantId)
+                sprintf('The Product %s does not exist', $variantId),
             );
         }
 
         if (null === $wishlist) {
             throw new WishlistNotFoundException(
-                sprintf('The Wishlist %s does not exist', $token)
+                sprintf('The Wishlist %s does not exist', $token),
             );
         }
 

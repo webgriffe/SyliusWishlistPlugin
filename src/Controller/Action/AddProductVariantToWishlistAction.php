@@ -59,7 +59,7 @@ final class AddProductVariantToWishlistAction
         RequestStack $requestStack,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
-        string $wishlistCookieToken
+        string $wishlistCookieToken,
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->productVariantRepository = $productVariantRepository;

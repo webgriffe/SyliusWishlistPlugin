@@ -36,7 +36,7 @@ final class MergeUserWishlistItemsListener
         WishlistRepositoryInterface $wishlistRepository,
         WishlistFactoryInterface $wishlistFactory,
         ObjectManager $wishlistManager,
-        string $wishlistCookieToken
+        string $wishlistCookieToken,
     ) {
         $this->wishlistRepository = $wishlistRepository;
         $this->wishlistFactory = $wishlistFactory;

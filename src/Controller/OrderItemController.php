@@ -35,7 +35,7 @@ final class OrderItemController extends BaseController
         $form = $this->getFormFactory()->create(
             $configuration->getFormType(),
             $this->createAddToCartCommand($cart, $orderItem),
-            $configuration->getFormOptions()
+            $configuration->getFormOptions(),
         );
 
         $form->handleRequest($request);

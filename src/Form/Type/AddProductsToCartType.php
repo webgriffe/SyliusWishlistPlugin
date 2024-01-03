@@ -36,7 +36,7 @@ final class AddProductsToCartType extends AbstractType
         AddToCartCommandFactoryInterface $addToCartCommandFactory,
         CartItemFactoryInterface $cartItemFactory,
         OrderItemQuantityModifierInterface $orderItemQuantityModifier,
-        array $validationGroups
+        array $validationGroups,
     ) {
         $this->addToCartCommandFactory = $addToCartCommandFactory;
         $this->cartItemFactory = $cartItemFactory;
@@ -58,7 +58,7 @@ final class AddProductsToCartType extends AbstractType
                     'product' => $wishlistProduct->getProduct(),
                     'data' => $this->addToCartCommandFactory->createWithCartAndCartItem(
                         $options['cart'],
-                        $this->createCartItem($wishlistProduct)
+                        $this->createCartItem($wishlistProduct),
                     ),
                     'is_wishlist' => true,
                 ])
