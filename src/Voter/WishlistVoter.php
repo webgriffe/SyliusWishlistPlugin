@@ -16,6 +16,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 
+/**
+ * @extends Voter<string, WishlistInterface>
+ */
 final class WishlistVoter extends Voter
 {
     public const UPDATE = 'update';
@@ -51,8 +54,6 @@ final class WishlistVoter extends Voter
         if (!$user instanceof ShopUserInterface) {
             $user = null;
         }
-
-        /** @var WishlistInterface $wishlist */
         $wishlist = $subject;
 
         switch ($attribute) {

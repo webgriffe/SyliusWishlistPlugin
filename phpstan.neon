@@ -7,7 +7,6 @@ parameters:
     checkMissingIterableValueType: false
     paths:
         - src
-        - tests/Behat
 
     excludes_analyse:
         # Makes PHPStan crash
