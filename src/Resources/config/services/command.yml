@@ -1,0 +1,7 @@
+services:
+    bitbag_sylius_wishlist_plugin.command.remove_disabled_products_from_wishlist:
+        class: BitBag\SyliusWishlistPlugin\CliCommand\RemoveDisabledProductsFromWishlistCommand
+        arguments:
+            - '@bitbag_sylius_wishlist_plugin.repository.wishlist_product'
+        tags:
+            - { name: console.command }
