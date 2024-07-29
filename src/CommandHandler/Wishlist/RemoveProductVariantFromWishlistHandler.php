@@ -16,6 +16,7 @@ use BitBag\SyliusWishlistPlugin\Exception\ProductVariantNotFoundException;
 use BitBag\SyliusWishlistPlugin\Exception\WishlistNotFoundException;
 use BitBag\SyliusWishlistPlugin\Repository\WishlistRepositoryInterface;
 use Doctrine\Persistence\ObjectManager;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
@@ -52,7 +53,7 @@ final class RemoveProductVariantFromWishlistHandler implements MessageHandlerInt
 
         $wishlist = $this->wishlistRepository->findByToken($token);
 
-        if (null === $variant || null === $wishlistProduct) {
+        if (!$variant instanceof ProductVariantInterface || null === $wishlistProduct) {
             throw new ProductVariantNotFoundException(
                 sprintf('The Product %s does not exist', $variantId),
             );
