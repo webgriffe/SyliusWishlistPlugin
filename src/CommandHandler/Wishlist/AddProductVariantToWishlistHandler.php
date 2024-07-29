@@ -15,6 +15,7 @@ use BitBag\SyliusWishlistPlugin\Entity\WishlistInterface;
 use BitBag\SyliusWishlistPlugin\Exception\ProductVariantNotFoundException;
 use BitBag\SyliusWishlistPlugin\Factory\WishlistProductFactoryInterface;
 use Doctrine\Persistence\ObjectManager;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -43,7 +44,7 @@ final class AddProductVariantToWishlistHandler implements MessageHandlerInterfac
         $variant = $this->productVariantRepository->find($variantId);
         $wishlist = $addProductVariantToWishlist->getWishlist();
 
-        if (null === $variant) {
+        if (!$variant instanceof ProductVariantInterface) {
             throw new ProductVariantNotFoundException(
                 sprintf('The ProductVariant %s does not exist', $variantId),
             );
