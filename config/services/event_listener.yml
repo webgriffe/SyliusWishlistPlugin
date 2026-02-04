@@ -1,0 +1,18 @@
+services:
+    bitbag_sylius_wishlist_plugin.event_listener.merge_user_wishlist_items:
+        class: BitBag\SyliusWishlistPlugin\EventListener\MergeUserWishlistItemsListener
+        arguments:
+            - "@bitbag_sylius_wishlist_plugin.repository.wishlist"
+            - "@bitbag_sylius_wishlist_plugin.factory.wishlist"
+            - "@bitbag_sylius_wishlist_plugin.manager.wishlist"
+            - "%wishlist_cookie_token%"
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
+
+    bitbag_sylius_wishlist_plugin.event_listener.clear_cookie_wishlist_items:
+        class: BitBag\SyliusWishlistPlugin\EventListener\ClearCookieWishlistItemsListener
+        arguments:
+            - "@sylius.storage.cookie"
+            - "%wishlist_cookie_token%"
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
