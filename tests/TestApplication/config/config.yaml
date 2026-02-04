@@ -1,0 +1,8 @@
+imports:
+    - { resource: "@BitBagSyliusWishlistPlugin/config/config.yml" }
+    - { resource: "services_test.php" }
+
+framework:
+    messenger:
+        transports:
+            main: 'in-memory://'
