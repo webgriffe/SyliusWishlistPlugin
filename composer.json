@@ -48,8 +48,6 @@
         "symfony/web-profiler-bundle": "^6.4 || ^7.1",
         "lchrusciel/api-test-case": "^5.0",
         "symfony/webpack-encore-bundle": "^2.2",
-        "phpstan/phpstan-doctrine": "^1.5",
-        "phpstan/phpstan-webmozart-assert": "^1.2",
         "vimeo/psalm": "^6.13"
     },
     "config": {
