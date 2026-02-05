@@ -4,7 +4,6 @@ services:
         class: BitBag\SyliusWishlistPlugin\Twig\Component\Product\AddToWishlistComponent
         arguments:
             - '@bitbag_sylius_wishlist_plugin.processor.add_product_variant_to_wishlist'
-            - '@form.factory'
             - '@sylius.resolver.product_variant.default'
             - '@sylius.repository.product'
             - '@sylius.repository.product_variant'

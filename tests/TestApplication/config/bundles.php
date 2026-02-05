@@ -1,5 +1,7 @@
 <?php
 
+use BitBag\SyliusWishlistPlugin\BitBagSyliusWishlistPlugin;
+
 return [
-    BitBag\SyliusWishlistPlugin\BitBagSyliusWishlistPlugin::class => ['all' => true],
+    BitBagSyliusWishlistPlugin::class => ['all' => true],
 ];

@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Migrations;
@@ -13,8 +7,12 @@ namespace BitBag\SyliusWishlistPlugin\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
+/**
+ * @psalm-api
+ */
 final class Version20201029161558 extends AbstractMigration
 {
+    #[\Override]
     public function up(Schema $schema): void
     {
         if ($schema->hasTable('bitbag_wishlist')) {
@@ -29,6 +27,7 @@ final class Version20201029161558 extends AbstractMigration
         $this->addSql('ALTER TABLE bitbag_wishlist_product ADD CONSTRAINT FK_3DBE67A03B69A9AF FOREIGN KEY (variant_id) REFERENCES sylius_product_variant (id)');
     }
 
+    #[\Override]
     public function down(Schema $schema): void
     {
         $this->addSql('ALTER TABLE bitbag_wishlist_product DROP FOREIGN KEY FK_3DBE67A0FB8E54CD');

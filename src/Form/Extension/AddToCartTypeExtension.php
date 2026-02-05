@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Form\Extension;
@@ -16,11 +10,17 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 final class AddToCartTypeExtension extends AbstractTypeExtension
 {
+    #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (!$options['is_wishlist']) {
+        /** @var bool $isWishlist */
+        $isWishlist = $options['is_wishlist'];
+        if (!$isWishlist) {
             $builder
                 ->add('addToWishlist', SubmitType::class, [
                     'label' => 'bitbag_sylius_wishlist_plugin.ui.add_to_wishlist',
@@ -32,6 +32,7 @@ final class AddToCartTypeExtension extends AbstractTypeExtension
         }
     }
 
+    #[\Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -45,6 +46,7 @@ final class AddToCartTypeExtension extends AbstractTypeExtension
         return AddToCartType::class;
     }
 
+    #[\Override]
     public static function getExtendedTypes(): array
     {
         return [AddToCartType::class];

@@ -1,75 +1,53 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Controller\Action;
 
 use BitBag\SyliusWishlistPlugin\Context\WishlistContextInterface;
+use BitBag\SyliusWishlistPlugin\Entity\WishlistInterface;
 use BitBag\SyliusWishlistPlugin\Form\Type\AddProductsToCartType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\OrderBundle\Controller\AddToCartCommandInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Sylius\Component\Order\Modifier\OrderModifierInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
-use Webmozart\Assert\Assert;
 
-final class ListWishlistProductsAction
+final readonly class ListWishlistProductsAction
 {
-    private WishlistContextInterface $wishlistContext;
-
-    private CartContextInterface $cartContext;
-
-    private FormFactoryInterface $formFactory;
-
-    private OrderModifierInterface $orderModifier;
-
-    private EntityManagerInterface $cartManager;
-
     private FlashBagInterface $flashBag;
 
-    private TranslatorInterface $translator;
-
-    private Environment $twigEnvironment;
-
     public function __construct(
-        WishlistContextInterface $wishlistContext,
-        CartContextInterface $cartContext,
-        FormFactoryInterface $formFactory,
-        OrderModifierInterface $orderModifier,
-        EntityManagerInterface $cartManager,
+        private WishlistContextInterface $wishlistContext,
+        private CartContextInterface $cartContext,
+        private FormFactoryInterface $formFactory,
+        private OrderModifierInterface $orderModifier,
+        private EntityManagerInterface $cartManager,
         RequestStack $requestStack,
-        TranslatorInterface $translator,
-        Environment $twigEnvironment,
+        private TranslatorInterface $translator,
+        private Environment $twigEnvironment,
     ) {
-        $this->wishlistContext = $wishlistContext;
-        $this->cartContext = $cartContext;
-        $this->formFactory = $formFactory;
-        $this->orderModifier = $orderModifier;
+        /** @var FlashBagAwareSessionInterface $session */
         $session = $requestStack->getSession();
-        Assert::isInstanceOf($session, Session::class);
         $this->flashBag = $session->getFlashBag();
-        $this->twigEnvironment = $twigEnvironment;
-        $this->cartManager = $cartManager;
-        $this->translator = $translator;
     }
 
     public function __invoke(Request $request): Response
     {
         $wishlist = $this->wishlistContext->getWishlist($request);
+        if (!$wishlist instanceof WishlistInterface) {
+            throw new ResourceNotFoundException();
+        }
         $cart = $this->cartContext->getCart();
 
         $form = $this->formFactory->create(AddProductsToCartType::class, null, [
@@ -94,6 +72,8 @@ final class ListWishlistProductsAction
             );
         }
 
+        /** @psalm-suppress UnnecessaryVarAnnotation */
+        /** @var FormError $error */
         foreach ($form->getErrors() as $error) {
             $this->flashBag->add('error', $error->getMessage());
         }
@@ -110,8 +90,10 @@ final class ListWishlistProductsAction
     {
         $result = false;
 
+        /** @var iterable $data */
+        $data = $form->getData();
         /** @var AddToCartCommandInterface $command */
-        foreach ($form->getData() as $command) {
+        foreach ($data as $command) {
             if (0 < $command->getCartItem()->getQuantity()) {
                 $result = true;
                 $this->orderModifier->addToOrder($command->getCart(), $command->getCartItem());

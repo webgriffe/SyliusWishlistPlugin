@@ -9,6 +9,7 @@ use BitBag\SyliusWishlistPlugin\Entity\WishlistInterface;
 use BitBag\SyliusWishlistPlugin\Entity\WishlistProductInterface;
 use BitBag\SyliusWishlistPlugin\Factory\WishlistProductFactoryInterface;
 use BitBag\SyliusWishlistPlugin\Repository\WishlistRepositoryInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class AddProductVariantToWishlistProcessor implements AddProductVariantToWishlistProcessorInterface
@@ -34,10 +36,16 @@ final readonly class AddProductVariantToWishlistProcessor implements AddProductV
     ) {
     }
 
+    #[\Override]
     public function process(ProductVariantInterface $productVariant, ?int $wishlistId = null): RedirectResponse
     {
-        $wishlist = $this->wishlistContext->getWishlist($this->requestStack->getCurrentRequest());
-        if (null === $wishlist) {
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request === null) {
+            throw new ResourceNotFoundException();
+        }
+
+        $wishlist = $this->wishlistContext->getWishlist($request);
+        if (!$wishlist instanceof WishlistInterface) {
             throw new ResourceNotFoundException();
         }
 
@@ -48,7 +56,7 @@ final readonly class AddProductVariantToWishlistProcessor implements AddProductV
 
         $token = $this->tokenStorage->getToken();
 
-        if (null === $token || !is_object($token->getUser())) {
+        if (!$token instanceof TokenInterface || !is_object($token->getUser())) {
             $this->addWishlistToResponseCookie($wishlist, $response);
         }
 
@@ -66,11 +74,13 @@ final readonly class AddProductVariantToWishlistProcessor implements AddProductV
         $flashBag = $session->getFlashBag();
 
         if ($wishlist->hasProductVariant($variant)) {
+            /** @var ProductInterface $product */
+            $product = $wishlistProduct->getProduct();
             $flashBag->add(
                 'error',
                 $this->translator->trans(
                     'bitbag_sylius_wishlist_plugin.ui.wishlist_has_product_variant',
-                    ['%productName%' => $wishlistProduct->getProduct()->getName()],
+                    ['%productName%' => $product->getName()],
                 ),
             );
 
@@ -84,7 +94,10 @@ final readonly class AddProductVariantToWishlistProcessor implements AddProductV
 
     private function addWishlistToResponseCookie(WishlistInterface $wishlist, Response $response): void
     {
-        $cookie = new Cookie($this->wishlistCookieToken, $wishlist->getToken(), strtotime('+1 year'));
+        /** @var int $strtotime */
+        $strtotime = strtotime('+1 year');
+
+        $cookie = new Cookie($this->wishlistCookieToken, $wishlist->getToken(), $strtotime);
 
         $response->headers->setCookie($cookie);
     }

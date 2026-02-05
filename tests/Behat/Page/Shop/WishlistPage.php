@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusWishlistPlugin\Behat\Page\Shop;
@@ -13,12 +7,16 @@ namespace Tests\BitBag\SyliusWishlistPlugin\Behat\Page\Shop;
 use Behat\Mink\Element\NodeElement;
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 use Sylius\Component\Core\Model\ProductInterface;
+use Webmozart\Assert\Assert;
 
 class WishlistPage extends SymfonyPage implements WishlistPageInterface
 {
     public function getItemsCount(): int
     {
-        return (int) $this->getDocument()->find('css', '[data-test-wishlist-primary-items-count]')->getText();
+        $var = $this->getDocument()->find('css', '[data-test-wishlist-primary-items-count]');
+        Assert::notNull($var, 'Wishlist items count element not found on the page.');
+
+        return (int) $var->getText();
     }
 
     public function hasProduct(string $productName): bool
@@ -54,24 +52,28 @@ class WishlistPage extends SymfonyPage implements WishlistPageInterface
         /** @var NodeElement $addToCartElement */
         foreach ($addToCartElements as $addToCartElement) {
             if ($productName === $addToCartElement->getAttribute('data-product-name')) {
-                $addToCartElement->setValue($quantity);
+                $addToCartElement->setValue((string) $quantity);
             }
         }
     }
 
     public function addProductToCart(): void
     {
-        $this->getDocument()->find('css', '[data-test-wishlist-add-all-to-cart]')->press();
+        $var = $this->getDocument()->find('css', '[data-test-wishlist-add-all-to-cart]');
+        Assert::notNull($var, 'Add all to cart button not found on the page.');
+        $var->press();
     }
 
     public function hasProductInCart(string $productName): bool
     {
-        $productNameOnPage = $this->getDocument()->find('css', '.ui.cart.popup > .list > .item > strong')->getText();
+        $var = $this->getDocument()->find('css', '.ui.cart.popup > .list > .item > strong');
+        Assert::notNull($var, 'Cart product name element not found on the page.');
+        $productNameOnPage = $var->getText();
 
         return $productName === $productNameOnPage;
     }
 
-    public function hasProductOutOfStockValidationMessage(ProductInterface $product)
+    public function hasProductOutOfStockValidationMessage(ProductInterface $product): bool
     {
         $outOfStockValidationErrorElement = $this->getDocument()->find('css', '.sylius-flash-message p');
 

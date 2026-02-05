@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusWishlistPlugin\Behat\Context\Ui;
@@ -22,38 +16,17 @@ use Tests\BitBag\SyliusWishlistPlugin\Behat\Service\LoginerInterface;
 use Tests\BitBag\SyliusWishlistPlugin\Behat\Service\WishlistCreatorInterface;
 use Webmozart\Assert\Assert;
 
-final class WishlistContext implements Context
+final readonly class WishlistContext implements Context
 {
-    private ProductRepositoryInterface $productRepository;
-
-    private ProductIndexPageInterface $productIndexPage;
-
-    private ProductShowPageInterface $productShowPage;
-
-    private WishlistPageInterface $wishlistPage;
-
-    private NotificationCheckerInterface $notificationChecker;
-
-    private LoginerInterface $loginer;
-
-    private WishlistCreatorInterface $wishlistCreator;
-
     public function __construct(
-        ProductRepositoryInterface $productRepository,
-        ProductIndexPageInterface $productIndexPage,
-        ProductShowPageInterface $productShowPage,
-        WishlistPageInterface $wishlistPage,
-        NotificationCheckerInterface $notificationChecker,
-        LoginerInterface $loginer,
-        WishlistCreatorInterface $wishlistCreator,
+        private ProductRepositoryInterface $productRepository,
+        private ProductIndexPageInterface $productIndexPage,
+        private ProductShowPageInterface $productShowPage,
+        private WishlistPageInterface $wishlistPage,
+        private NotificationCheckerInterface $notificationChecker,
+        private LoginerInterface $loginer,
+        private WishlistCreatorInterface $wishlistCreator,
     ) {
-        $this->productRepository = $productRepository;
-        $this->productIndexPage = $productIndexPage;
-        $this->wishlistPage = $wishlistPage;
-        $this->notificationChecker = $notificationChecker;
-        $this->loginer = $loginer;
-        $this->wishlistCreator = $wishlistCreator;
-        $this->productShowPage = $productShowPage;
     }
 
     /**
@@ -66,7 +39,7 @@ final class WishlistContext implements Context
         /** @var ProductInterface $product */
         $product = $this->productRepository->findOneBy([]);
 
-        $this->productIndexPage->addProductToWishlist($product->getName());
+        $this->productIndexPage->addProductToWishlist((string) $product->getName());
     }
 
     /**
@@ -153,7 +126,9 @@ final class WishlistContext implements Context
      */
     public function iRemoveThisProduct(): void
     {
-        $this->wishlistPage->removeProduct($this->productRepository->findOneBy([])->getName());
+        $product = $this->productRepository->findOneBy([]);
+        Assert::notNull($product);
+        $this->wishlistPage->removeProduct((string) $product->getName());
     }
 
     /**
@@ -218,7 +193,7 @@ final class WishlistContext implements Context
     /**
      * @Then I should not be notified that :product does not have sufficient stock
      */
-    public function iShouldBeNotifiedThatThisProductDoesNotHaveSufficientStock(ProductInterface $product)
+    public function iShouldBeNotifiedThatThisProductDoesNotHaveSufficientStock(ProductInterface $product): void
     {
         Assert::true($this->wishlistPage->hasProductOutOfStockValidationMessage($product));
     }

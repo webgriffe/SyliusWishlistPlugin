@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Entity;
@@ -16,31 +10,36 @@ use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 
-class Wishlist implements WishlistInterface
+/**
+ * @psalm-api
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
+final class Wishlist implements WishlistInterface
 {
-    protected ?int $id = null;
+    private ?int $id = null;
 
-    /** @var Collection|WishlistProductInterface[] */
-    protected $wishlistProducts;
+    /** @var Collection<array-key, WishlistProductInterface> */
+    private Collection $wishlistProducts;
 
-    protected ?ShopUserInterface $shopUser = null;
+    private ?ShopUserInterface $shopUser = null;
 
-    /** @var WishlistTokenInterface|null */
-    protected $token;
+    private WishlistTokenInterface|string $token;
 
     public function __construct()
     {
         $this->wishlistProducts = new ArrayCollection();
         $this->token = new WishlistToken();
-        $this->id = null;
     }
 
+    #[\Override]
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getProducts(): Collection
+    #[\Override]
+    public function getProducts(): ArrayCollection
     {
         $products = [];
 
@@ -48,13 +47,14 @@ class Wishlist implements WishlistInterface
             $products[] = $wishlistProduct->getProduct();
         }
 
-        return new ArrayCollection($products);
+        /** @var ArrayCollection<array-key, ProductInterface> $arrayCollection */
+        $arrayCollection = new ArrayCollection($products);
+
+        return $arrayCollection;
     }
 
-    /**
-     * @return Collection<int,ProductVariantInterface|null>
-     */
-    public function getProductVariants(): Collection
+    #[\Override]
+    public function getProductVariants(): ArrayCollection
     {
         $variants = [];
 
@@ -62,9 +62,13 @@ class Wishlist implements WishlistInterface
             $variants[] = $wishlistProduct->getVariant();
         }
 
-        return new ArrayCollection($variants);
+        /** @var ArrayCollection<array-key, ProductVariantInterface> $arrayCollection */
+        $arrayCollection = new ArrayCollection($variants);
+
+        return $arrayCollection;
     }
 
+    #[\Override]
     public function hasProductVariant(ProductVariantInterface $productVariant): bool
     {
         foreach ($this->wishlistProducts as $wishlistProduct) {
@@ -76,11 +80,13 @@ class Wishlist implements WishlistInterface
         return false;
     }
 
+    #[\Override]
     public function getWishlistProducts(): Collection
     {
         return $this->wishlistProducts;
     }
 
+    #[\Override]
     public function hasProduct(ProductInterface $product): bool
     {
         foreach ($this->wishlistProducts as $wishlistProduct) {
@@ -92,61 +98,67 @@ class Wishlist implements WishlistInterface
         return false;
     }
 
+    #[\Override]
     public function setWishlistProducts(Collection $wishlistProducts): void
     {
         $this->wishlistProducts = $wishlistProducts;
     }
 
+    #[\Override]
     public function hasWishlistProduct(WishlistProductInterface $wishlistProduct): bool
     {
         return $this->wishlistProducts->contains($wishlistProduct);
     }
 
+    #[\Override]
     public function addWishlistProduct(WishlistProductInterface $wishlistProduct): void
     {
-        if (!$this->hasProductVariant($wishlistProduct->getVariant())) {
+        $productVariant = $wishlistProduct->getVariant();
+        if ($productVariant !== null && !$this->hasProductVariant($productVariant)) {
             $wishlistProduct->setWishlist($this);
             $this->wishlistProducts->add($wishlistProduct);
         }
     }
 
+    #[\Override]
     public function getShopUser(): ?ShopUserInterface
     {
         return $this->shopUser;
     }
 
+    #[\Override]
     public function setShopUser(ShopUserInterface $shopUser): void
     {
         $this->shopUser = $shopUser;
     }
 
+    #[\Override]
     public function getToken(): string
     {
         return (string) $this->token;
     }
 
+    #[\Override]
     public function setToken(string $token): void
     {
         $this->token = new WishlistToken($token);
     }
 
-    public function removeProduct(WishlistProductInterface $product): self
+    #[\Override]
+    public function removeProduct(WishlistProductInterface $product): void
     {
         if ($this->hasWishlistProduct($product)) {
             $this->wishlistProducts->removeElement($product);
         }
-
-        return $this;
     }
 
-    public function removeProductVariant(ProductVariantInterface $variant): self
+    #[\Override]
+    public function removeProductVariant(ProductVariantInterface $variant): void
     {
         foreach ($this->wishlistProducts as $wishlistProduct) {
             if ($wishlistProduct->getVariant() === $variant) {
                 $this->wishlistProducts->removeElement($wishlistProduct);
             }
         }
-
-        return $this;
     }
 }

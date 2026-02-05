@@ -14,7 +14,6 @@ use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Sylius\TwigHooks\LiveComponent\HookableLiveComponentTrait;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -23,7 +22,9 @@ use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\ComponentToolsTrait;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PostMount;
+use Webmozart\Assert\Assert;
 
+/** @psalm-suppress PropertyNotSetInConstructor */
 #[AsLiveComponent]
 final class AddToWishlistComponent
 {
@@ -36,8 +37,7 @@ final class AddToWishlistComponent
 
     public function __construct(
         private readonly AddProductVariantToWishlistProcessorInterface $addProductVariantToWishlistProcessor,
-        private readonly FormFactoryInterface $formFactory,
-        protected readonly ProductVariantResolverInterface $productVariantResolver,
+        private readonly ProductVariantResolverInterface $productVariantResolver,
         ProductRepositoryInterface $productRepository,
         ProductVariantRepositoryInterface $productVariantRepository,
     ) {
@@ -48,8 +48,10 @@ final class AddToWishlistComponent
     #[PostMount]
     public function postMount(): void
     {
+        $subject = $this->product;
+        Assert::notNull($subject, 'Product must be set for AddToWishlistComponent');
         /** @var ProductVariantInterface|null $variant * */
-        $variant = $this->productVariantResolver->getVariant($this->product);
+        $variant = $this->productVariantResolver->getVariant($subject);
         $this->variant = $variant;
     }
 
@@ -63,19 +65,27 @@ final class AddToWishlistComponent
         }
 
         $changedVariant = $this->productVariantRepository->find($variantId);
-
         if ($changedVariant === $this->variant) {
             return;
         }
 
-        $this->variant = $changedVariant?->isEnabled() ? $changedVariant : null;
+        if ($changedVariant === null) {
+            $this->variant = null;
+
+            return;
+        }
+
+        $this->variant = $changedVariant->isEnabled() ? $changedVariant : null;
     }
 
     #[LiveAction]
     public function addToWishlist(#[LiveArg] ?int $wishlistId = null): RedirectResponse
     {
+        $productVariant = $this->variant;
+        Assert::notNull($productVariant, 'Product variant must be set for AddToWishlistComponent');
+
         return $this->addProductVariantToWishlistProcessor->process(
-            $this->variant,
+            $productVariant,
             $wishlistId,
         );
     }

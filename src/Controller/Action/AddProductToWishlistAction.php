@@ -1,18 +1,11 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Controller\Action;
 
 use BitBag\SyliusWishlistPlugin\Context\WishlistContextInterface;
 use BitBag\SyliusWishlistPlugin\Entity\WishlistInterface;
-use BitBag\SyliusWishlistPlugin\Entity\WishlistProductInterface;
 use BitBag\SyliusWishlistPlugin\Factory\WishlistProductFactoryInterface;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -23,73 +16,49 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Webmozart\Assert\Assert;
 
-final class AddProductToWishlistAction
+final readonly class AddProductToWishlistAction
 {
-    private TokenStorageInterface $tokenStorage;
-
-    private ProductRepositoryInterface $productRepository;
-
-    private WishlistContextInterface $wishlistContext;
-
-    private WishlistProductFactoryInterface $wishlistProductFactory;
-
-    private ObjectManager $wishlistManager;
-
     private FlashBagInterface $flashBag;
 
-    private TranslatorInterface $translator;
-
-    private UrlGeneratorInterface $urlGenerator;
-
-    private string $wishlistCookieToken;
-
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        ProductRepositoryInterface $productRepository,
-        WishlistContextInterface $wishlistContext,
-        WishlistProductFactoryInterface $wishlistProductFactory,
-        ObjectManager $wishlistManager,
+        private TokenStorageInterface $tokenStorage,
+        private ProductRepositoryInterface $productRepository,
+        private WishlistContextInterface $wishlistContext,
+        private WishlistProductFactoryInterface $wishlistProductFactory,
+        private ObjectManager $wishlistManager,
         RequestStack $requestStack,
-        TranslatorInterface $translator,
-        UrlGeneratorInterface $urlGenerator,
-        string $wishlistCookieToken,
+        private TranslatorInterface $translator,
+        private UrlGeneratorInterface $urlGenerator,
+        private string $wishlistCookieToken,
     ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->productRepository = $productRepository;
-        $this->wishlistContext = $wishlistContext;
-        $this->wishlistProductFactory = $wishlistProductFactory;
-        $this->wishlistManager = $wishlistManager;
-        $this->urlGenerator = $urlGenerator;
-        $this->wishlistCookieToken = $wishlistCookieToken;
+        /** @var FlashBagAwareSessionInterface $session */
         $session = $requestStack->getSession();
-        Assert::isInstanceOf($session, Session::class);
         $this->flashBag = $session->getFlashBag();
-        $this->translator = $translator;
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, string $productId): Response
     {
         /** @var ProductInterface|null $product */
-        $product = $this->productRepository->find($request->get('productId'));
-
+        $product = $this->productRepository->find($productId);
         if (null === $product) {
             throw new NotFoundHttpException();
         }
 
         $wishlist = $this->wishlistContext->getWishlist($request);
+        if (!$wishlist instanceof WishlistInterface) {
+            throw new ResourceNotFoundException();
+        }
 
-        /** @var WishlistProductInterface $wishlistProduct */
         $wishlistProduct = $this->wishlistProductFactory->createForWishlistAndProduct($wishlist, $product);
-
         $wishlist->addWishlistProduct($wishlistProduct);
-
         if (null === $wishlist->getId()) {
             $this->wishlistManager->persist($wishlist);
         }
@@ -101,8 +70,7 @@ final class AddProductToWishlistAction
         $response = new RedirectResponse($this->urlGenerator->generate('bitbag_sylius_wishlist_plugin_shop_wishlist_list_products'));
 
         $token = $this->tokenStorage->getToken();
-
-        if (null === $token || !is_object($token->getUser())) {
+        if (!$token instanceof TokenInterface || !is_object($token->getUser())) {
             $this->addWishlistToResponseCookie($wishlist, $response);
         }
 
@@ -111,7 +79,9 @@ final class AddProductToWishlistAction
 
     private function addWishlistToResponseCookie(WishlistInterface $wishlist, Response $response): void
     {
-        $cookie = new Cookie($this->wishlistCookieToken, $wishlist->getToken(), strtotime('+1 year'));
+        /** @var int $strtotime */
+        $strtotime = strtotime('+1 year');
+        $cookie = new Cookie($this->wishlistCookieToken, $wishlist->getToken(), $strtotime);
 
         $response->headers->setCookie($cookie);
     }

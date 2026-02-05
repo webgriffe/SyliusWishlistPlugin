@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\DependencyInjection;
@@ -21,13 +15,17 @@ use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * @psalm-api
+ */
 final class Configuration implements ConfigurationInterface
 {
+    #[\Override]
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('bitbag_sylius_wishlist_plugin');
         $rootNode = $treeBuilder->getRootNode();
-        /** @phpstan-ignore-next-line  */
+        /** @psalm-suppress PossiblyNullReference, UndefinedInterfaceMethod, UnusedMethodCall */
         $rootNode
             ->children()
             ->scalarNode('wishlist_cookie_token')
@@ -71,8 +69,7 @@ final class Configuration implements ConfigurationInterface
             ->end()
             ->end()
             ->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }

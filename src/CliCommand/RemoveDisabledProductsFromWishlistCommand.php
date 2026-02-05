@@ -17,29 +17,26 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 final class RemoveDisabledProductsFromWishlistCommand extends Command
 {
-    protected static $defaultName = 'bitbag:wishlist:remove-disabled-products';
-
-    /**
-     * @param RepositoryInterface<WishlistProductInterface> $wishlistProductRepository
-     */
     public function __construct(
         private readonly RepositoryInterface $wishlistProductRepository,
     ) {
         parent::__construct();
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var WishlistProductInterface[] $wishlistProducts */
         $wishlistProducts = $this->wishlistProductRepository->findAll();
-
         foreach ($wishlistProducts as $wishlistProduct) {
-            if ($wishlistProduct->getProduct()->isEnabled()) {
+            $product = $wishlistProduct->getProduct();
+            if ($product === null || $product->isEnabled()) {
                 continue;
             }
 
             $output->writeln(sprintf(
                 'Removing disabled product with code "%s" from wishlist "%s".',
-                (string) $wishlistProduct->getProduct()->getCode(),
+                (string) $product->getCode(),
                 (string) $wishlistProduct->getWishlist()->getId(),
             ));
             $wishlistProduct->getWishlist()->removeProduct($wishlistProduct);

@@ -1,27 +1,16 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace spec\BitBag\SyliusWishlistPlugin\EventListener;
 
 use BitBag\SyliusWishlistPlugin\EventListener\ClearCookieWishlistItemsListener;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Sylius\Component\Core\Model\AdminUser;
 use Sylius\Component\Core\Model\AdminUserInterface;
-use Sylius\Component\Core\Model\ShopUser;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Resource\Storage\StorageInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 final class ClearCookieWishlistItemsListenerSpec extends ObjectBehavior
