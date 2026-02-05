@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Twig\Component\Product;
 
+use BitBag\SyliusWishlistPlugin\Processor\AddProductVariantToWishlistProcessorInterface;
 use Sylius\Bundle\ShopBundle\Twig\Component\Product\AddToCartFormComponent;
 use Sylius\Bundle\ShopBundle\Twig\Component\Product\Trait\ProductLivePropTrait;
 use Sylius\Bundle\ShopBundle\Twig\Component\Product\Trait\ProductVariantLivePropTrait;
@@ -13,10 +14,7 @@ use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface;
 use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Sylius\TwigHooks\LiveComponent\HookableLiveComponentTrait;
-use BitBag\SyliusWishlistPlugin\Form\Type\AddToWishlistType;
-use BitBag\SyliusWishlistPlugin\Processor\AddProductVariantToWishlistProcessorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;

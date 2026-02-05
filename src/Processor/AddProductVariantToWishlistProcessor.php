@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace BitBag\SyliusWishlistPlugin\Processor;
 
 use BitBag\SyliusWishlistPlugin\Context\WishlistContextInterface;
-use Sylius\Component\Core\Model\ProductVariantInterface;
 use BitBag\SyliusWishlistPlugin\Entity\WishlistInterface;
 use BitBag\SyliusWishlistPlugin\Entity\WishlistProductInterface;
 use BitBag\SyliusWishlistPlugin\Factory\WishlistProductFactoryInterface;
 use BitBag\SyliusWishlistPlugin\Repository\WishlistRepositoryInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
