@@ -32,7 +32,7 @@ final class RenderHeaderTemplateAction
         $wishlist = $this->wishlistContext->getWishlist($request);
 
         return new Response(
-            $this->twigEnvironment->render('@BitBagSyliusWishlistPlugin/Common/widget.html.twig', [
+            $this->twigEnvironment->render('@BitBagSyliusWishlistPlugin/common/widget.html.twig', [
                 'wishlist' => $wishlist,
             ]),
         );

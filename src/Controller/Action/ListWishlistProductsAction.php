@@ -87,7 +87,7 @@ final class ListWishlistProductsAction
             }
 
             return new Response(
-                $this->twigEnvironment->render('@BitBagSyliusWishlistPlugin/WishlistDetails/index.html.twig', [
+                $this->twigEnvironment->render('@BitBagSyliusWishlistPlugin/wishlist_details/index.html.twig', [
                     'wishlist' => $wishlist,
                     'form' => $form->createView(),
                 ]),
@@ -99,7 +99,7 @@ final class ListWishlistProductsAction
         }
 
         return new Response(
-            $this->twigEnvironment->render('@BitBagSyliusWishlistPlugin/WishlistDetails/index.html.twig', [
+            $this->twigEnvironment->render('@BitBagSyliusWishlistPlugin/wishlist_details/index.html.twig', [
                 'wishlist' => $wishlist,
                 'form' => $form->createView(),
             ]),

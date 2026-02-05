@@ -21,7 +21,7 @@ services:
             - "@bitbag_sylius_cms_plugin.behat.page.shop.product_index"
             - "@bitbag_sylius_cms_plugin.behat.page.shop.product_show"
             - "@bitbag_sylius_cms_plugin.behat.page.shop.wishlist"
-            - "@sylius.behat.notification_checker"
+            - "@sylius.behat.notification_checker.shop"
             - "@bitbag_sylius_cms_plugin.behat.loginer"
             - "@bitbag_sylius_cms_plugin.behat.wishlist_creator"
 
