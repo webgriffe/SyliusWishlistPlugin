@@ -11,3 +11,5 @@ bitbag_sylius_wishlist_plugin:
         save_wishlist: Zapisz listę życzeń
         variant_not_unique: Ten wariant jest już na Twojej liście życzeń
         increase_quantity: Zwiększ ilość przynajmniej jednego z produktów.
+        wishlist_has_product_variant: 'Wariant %productName% jest już na liście życzeń.'
+        your_wishlist: Twoja lista życzeń
