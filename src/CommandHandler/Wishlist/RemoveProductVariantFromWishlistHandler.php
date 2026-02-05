@@ -19,9 +19,10 @@ use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-final class RemoveProductVariantFromWishlistHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class RemoveProductVariantFromWishlistHandler
 {
     private WishlistRepositoryInterface $wishlistRepository;
 

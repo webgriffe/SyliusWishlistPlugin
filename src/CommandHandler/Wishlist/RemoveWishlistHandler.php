@@ -14,9 +14,10 @@ use BitBag\SyliusWishlistPlugin\Command\Wishlist\RemoveWishlist;
 use BitBag\SyliusWishlistPlugin\Exception\WishlistNotFoundException;
 use BitBag\SyliusWishlistPlugin\Repository\WishlistRepositoryInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-final class RemoveWishlistHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class RemoveWishlistHandler
 {
     private WishlistRepositoryInterface $wishlistRepository;
 

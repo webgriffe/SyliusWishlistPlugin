@@ -17,9 +17,10 @@ use BitBag\SyliusWishlistPlugin\Factory\WishlistProductFactoryInterface;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-final class AddProductVariantToWishlistHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class AddProductVariantToWishlistHandler
 {
     private WishlistProductFactoryInterface $wishlistProductFactory;
 

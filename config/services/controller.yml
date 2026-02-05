@@ -81,7 +81,7 @@ services:
             - "@bitbag_sylius_wishlist_plugin.context.wishlist"
             - "@sylius.context.cart"
             - "@form.factory"
-            - "@sylius.order_modifier"
+            - "@sylius.modifier.order"
             - "@sylius.manager.order"
             - "@request_stack"
             - "@translator"

@@ -18,9 +18,10 @@ use BitBag\SyliusWishlistPlugin\Repository\WishlistRepositoryInterface;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-final class RemoveProductFromWishlistHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class RemoveProductFromWishlistHandler
 {
     private ProductRepositoryInterface $productRepository;
 

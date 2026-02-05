@@ -16,10 +16,11 @@ use BitBag\SyliusWishlistPlugin\Factory\WishlistFactoryInterface;
 use BitBag\SyliusWishlistPlugin\Resolver\ShopUserWishlistResolverInterface;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Model\ShopUserInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-final class CreateWishlistHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class CreateWishlistHandler
 {
     private TokenStorageInterface $tokenStorage;
 
