@@ -39,12 +39,9 @@ default:
             bootstrap: vendor/sylius/test-application/config/bootstrap.php
             kernel:
                 class: Sylius\TestApplication\Kernel
-                environment: test
 
         FriendsOfBehat\VariadicExtension: ~
 
         FriendsOfBehat\SuiteSettingsExtension:
             paths:
                 - "features"
-
-        SyliusLabs\SuiteTagsExtension: ~
