@@ -23,7 +23,7 @@ final class BitBagSyliusWishlistExtension extends AbstractResourceExtension impl
         $configuration = $this->getConfiguration([], $container);
         $config = $this->processConfiguration($configuration, $configs);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
         /** @var string $value */
         $value = $config['wishlist_cookie_token'];
