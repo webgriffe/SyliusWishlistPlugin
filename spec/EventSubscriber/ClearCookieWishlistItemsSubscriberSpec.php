@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace spec\BitBag\SyliusWishlistPlugin\EventListener;
+namespace spec\BitBag\SyliusWishlistPlugin\EventSubscriber;
 
-use BitBag\SyliusWishlistPlugin\EventListener\ClearCookieWishlistItemsSubscriber;
+use BitBag\SyliusWishlistPlugin\EventSubscriber\ClearCookieWishlistItemsSubscriber;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Resource\Storage\StorageInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 
-final class ClearCookieWishlistItemsListenerSpec extends ObjectBehavior
+final class ClearCookieWishlistItemsSubscriberSpec extends ObjectBehavior
 {
     public function let(StorageInterface $cookieStorage): void
     {
@@ -31,19 +31,20 @@ final class ClearCookieWishlistItemsListenerSpec extends ObjectBehavior
         AdminUserInterface $adminUser
     ): void {
         $token->getUser()->willReturn($adminUser);
-        $interactiveLoginEvent = new InteractiveLoginEvent(new Request(), $token->getWrappedObject());
+        $logoutEvent = new LogoutEvent(new Request(), $token->getWrappedObject());
         $cookieStorage->set('bitbag_sylius_wishlist', null)->shouldNotBeCalled();
-        $this->onInteractiveLogin($interactiveLoginEvent);
+        $this->onLogout($logoutEvent);
     }
 
-    function it_adds_cookie_items_to_user_items_if_both_exist(
+    function it_clears_cookie_on_logout_for_shop_user(
         StorageInterface $cookieStorage,
         TokenInterface $token,
         ShopUserInterface $shopUser
     ): void {
         $token->getUser()->willReturn($shopUser);
-        $interactiveLoginEvent = new InteractiveLoginEvent(new Request(), $token->getWrappedObject());
+        $logoutEvent = new LogoutEvent(new Request(), $token->getWrappedObject());
         $cookieStorage->set('bitbag_sylius_wishlist', null)->shouldBeCalled();
-        $this->onInteractiveLogin($interactiveLoginEvent);
+        $this->onLogout($logoutEvent);
     }
 }
+

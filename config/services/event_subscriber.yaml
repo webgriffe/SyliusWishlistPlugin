@@ -1,6 +1,6 @@
 services:
     bitbag_sylius_wishlist_plugin.event_subscriber.clear_cookie_wishlist_items:
-        class: BitBag\SyliusWishlistPlugin\EventListener\ClearCookieWishlistItemsSubscriber
+        class: BitBag\SyliusWishlistPlugin\EventSubscriber\ClearCookieWishlistItemsSubscriber
         arguments:
             - "@sylius.storage.cookie"
             - "%wishlist_cookie_token%"

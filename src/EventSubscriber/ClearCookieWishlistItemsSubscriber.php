@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusWishlistPlugin\EventListener;
+namespace BitBag\SyliusWishlistPlugin\EventSubscriber;
 
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Resource\Storage\StorageInterface;
