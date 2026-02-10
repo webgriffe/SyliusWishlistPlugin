@@ -22,6 +22,7 @@ final class BitBagSyliusWishlistPlugin extends Bundle
         return \dirname(__DIR__);
     }
 
+    #[\Override]
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new TwigHooksProfilerPass());

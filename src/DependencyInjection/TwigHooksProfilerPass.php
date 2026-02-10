@@ -10,9 +10,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /** @internal */
 final class TwigHooksProfilerPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
-        /** @var string $env */
         $env = $container->getParameter('kernel.environment');
         if ($env === 'dev') {
             return;
