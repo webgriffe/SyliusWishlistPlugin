@@ -31,17 +31,19 @@ Feature: Adding a product to wishlist
         Given the store has a product "Jimmy Beammy" priced at "$233.00"
         And the store has a product "Ice ball" priced at "$144.00"
         And all store products appear under a main taxonomy
+        And there is a user "shop@example.com"
+        And this user has product "Ice ball" in wishlist
         When I add "Jimmy Beammy" product to my wishlist
-        And I log in to my account which already has "Ice ball" product in the wishlist
+        # this is necessary to trigger interactive login events
+        And I log in as "shop@example.com" with "sylius" password
         Then I should have 2 products in my wishlist
 
     @ui
     Scenario: Adding a wishlist product signing in and out and in
         Given the store has a product "Red Roses" priced at "$12.00"
         And I have this product in my wishlist
-        When I log in
+        And I logged in as "shop@example.com"
+        When I visit this channel's homepage
         And I log out
-        And I log in again
+        And I logged in as "shop@example.com"
         Then I should have one item in my wishlist
-
-

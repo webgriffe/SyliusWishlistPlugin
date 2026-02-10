@@ -11,8 +11,8 @@ class ProductShowPage extends ShowPage implements ProductShowPageInterface
 {
     public function addVariantToWishlist(): void
     {
-        $var = $this->getDocument()->find('css', '[data-test-wishlist-add-variant]');
-        Assert::notNull($var, 'Wishlist add variant button not found on the page.');
+        $var = $this->getDocument()->find('css', '[data-test-wishlist-add-product]');
+        Assert::notNull($var, 'Wishlist add product button not found on the page.');
         $var->click();
 
         // Wait for the ajax request to finish

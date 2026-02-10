@@ -64,15 +64,6 @@ class WishlistPage extends SymfonyPage implements WishlistPageInterface
         $var->press();
     }
 
-    public function hasProductInCart(string $productName): bool
-    {
-        $var = $this->getDocument()->find('css', '.ui.cart.popup > .list > .item > strong');
-        Assert::notNull($var, 'Cart product name element not found on the page.');
-        $productNameOnPage = $var->getText();
-
-        return $productName === $productNameOnPage;
-    }
-
     public function hasProductOutOfStockValidationMessage(ProductInterface $product): bool
     {
         $outOfStockValidationErrorElement = $this->getDocument()->find('css', '.sylius-flash-message p');

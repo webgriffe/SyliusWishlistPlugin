@@ -7,12 +7,12 @@ namespace Tests\BitBag\SyliusWishlistPlugin\Behat\Context\Ui;
 use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
+use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Tests\BitBag\SyliusWishlistPlugin\Behat\Page\Shop\ProductIndexPageInterface;
 use Tests\BitBag\SyliusWishlistPlugin\Behat\Page\Shop\ProductShowPageInterface;
 use Tests\BitBag\SyliusWishlistPlugin\Behat\Page\Shop\WishlistPageInterface;
-use Tests\BitBag\SyliusWishlistPlugin\Behat\Service\LoginerInterface;
 use Tests\BitBag\SyliusWishlistPlugin\Behat\Service\WishlistCreatorInterface;
 use Webmozart\Assert\Assert;
 
@@ -24,8 +24,8 @@ final readonly class WishlistContext implements Context
         private ProductShowPageInterface $productShowPage,
         private WishlistPageInterface $wishlistPage,
         private NotificationCheckerInterface $notificationChecker,
-        private LoginerInterface $loginer,
         private WishlistCreatorInterface $wishlistCreator,
+        private SharedStorageInterface $sharedStorage,
     ) {
     }
 
@@ -53,48 +53,21 @@ final readonly class WishlistContext implements Context
     }
 
     /**
+     * @Given /^this user has (product "[^"]+") in wishlist$/
+     */
+    public function iLogInToMyAccountWhichAlreadyHasProductInTheWishlist(ProductInterface $product): void
+    {
+        $user = $this->sharedStorage->get('user');
+
+        $this->wishlistCreator->createWishlistWithProductAndUser($user, $product);
+    }
+
+    /**
      * @When I add this product variant to wishlist
      */
     public function iAddThisProductVariantToWishlist(): void
     {
         $this->productShowPage->addVariantToWishlist();
-    }
-
-    /**
-     * @When I log in to my account which already has :product product in the wishlist
-     */
-    public function iLogInToMyAccountWhichAlreadyHasProductInTheWishlist(ProductInterface $product): void
-    {
-        $user = $this->loginer->createUser();
-
-        $this->wishlistCreator->createWishlistWithProductAndUser($user, $product);
-        $this->loginer->logIn();
-    }
-
-    /**
-     * @When I log in
-     */
-    public function iLogIn(): void
-    {
-        $this->loginer->createUser();
-
-        $this->loginer->logIn();
-    }
-
-    /**
-     * @When I log in again
-     */
-    public function iLogInAgain(): void
-    {
-        $this->loginer->logIn();
-    }
-
-    /**
-     * @When I log out
-     */
-    public function iLogOut(): void
-    {
-        $this->loginer->logOut();
     }
 
     /**
@@ -160,7 +133,7 @@ final readonly class WishlistContext implements Context
      */
     public function iShouldHaveOnItemInMyWishlist(): void
     {
-        Assert::eq(1, $this->wishlistPage->getItemsCount());
+        Assert::eq($this->wishlistPage->getItemsCount(), 1);
     }
 
     /**
@@ -168,7 +141,7 @@ final readonly class WishlistContext implements Context
      */
     public function iShouldHaveProductsInMyWishlist(int $count): void
     {
-        Assert::eq($count, $this->wishlistPage->getItemsCount());
+        Assert::eq($this->wishlistPage->getItemsCount(), $count);
     }
 
     /**
@@ -180,18 +153,7 @@ final readonly class WishlistContext implements Context
     }
 
     /**
-     * @Then I should have :productName product in my cart
-     */
-    public function iShouldHaveProductInMyCart(string $productName): void
-    {
-        Assert::true(
-            $this->wishlistPage->hasProductInCart($productName),
-            sprintf('Product %s was not found in the cart.', $productName),
-        );
-    }
-
-    /**
-     * @Then I should not be notified that :product does not have sufficient stock
+     * @Then I should be notified that :product does not have sufficient stock
      */
     public function iShouldBeNotifiedThatThisProductDoesNotHaveSufficientStock(ProductInterface $product): void
     {

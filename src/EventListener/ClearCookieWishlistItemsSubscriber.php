@@ -6,17 +6,26 @@ namespace BitBag\SyliusWishlistPlugin\EventListener;
 
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Resource\Storage\StorageInterface;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 
-final class ClearCookieWishlistItemsListener
+final class ClearCookieWishlistItemsSubscriber implements EventSubscriberInterface
 {
     public function __construct(private StorageInterface $cookieStorage, private string $wishlistCookieToken)
     {
     }
 
-    public function onInteractiveLogin(InteractiveLoginEvent $interactiveLoginEvent): void
+    #[\Override]
+    public static function getSubscribedEvents(): array
     {
-        $user = $interactiveLoginEvent->getAuthenticationToken()->getUser();
+        return [
+            LogoutEvent::class => 'onLogout',
+        ];
+    }
+
+    public function onLogout(LogoutEvent $event): void
+    {
+        $user = $event->getToken()?->getUser();
 
         if (!$user instanceof ShopUserInterface) {
             return;

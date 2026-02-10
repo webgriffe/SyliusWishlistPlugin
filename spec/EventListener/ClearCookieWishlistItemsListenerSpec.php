@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace spec\BitBag\SyliusWishlistPlugin\EventListener;
 
-use BitBag\SyliusWishlistPlugin\EventListener\ClearCookieWishlistItemsListener;
+use BitBag\SyliusWishlistPlugin\EventListener\ClearCookieWishlistItemsSubscriber;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
@@ -22,7 +22,7 @@ final class ClearCookieWishlistItemsListenerSpec extends ObjectBehavior
 
     function it_is_initializable(): void
     {
-        $this->shouldHaveType(ClearCookieWishlistItemsListener::class);
+        $this->shouldHaveType(ClearCookieWishlistItemsSubscriber::class);
     }
 
     function it_does_nothing_if_not_shop_user(
