@@ -42,8 +42,10 @@ Feature: Adding a product to wishlist
     Scenario: Adding a wishlist product signing in and out and in
         Given the store has a product "Red Roses" priced at "$12.00"
         And I have this product in my wishlist
-        And I logged in as "shop@example.com"
-        When I visit this channel's homepage
+        And there is a user "shop@example.com"
+        And I log in as "shop@example.com" with "sylius" password
+        And I visit this channel's homepage
         And I log out
-        And I logged in as "shop@example.com"
+        When I log in as "shop@example.com" with "sylius" password
+        And I visit this channel's homepage
         Then I should have one item in my wishlist
