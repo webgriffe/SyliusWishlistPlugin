@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace spec\BitBag\SyliusWishlistPlugin\Controller\Action;
@@ -60,10 +54,9 @@ final class RemoveProductFromWishlistActionSpec extends ObjectBehavior
 
     function it_throws_404_if_product_was_not_found(Request $request, ProductRepositoryInterface $productRepository): void
     {
-        $request->get('productId')->willReturn(1);
         $productRepository->find(1)->willReturn(null);
 
-        $this->shouldThrow(NotFoundHttpException::class)->during('__invoke', [$request]);
+        $this->shouldThrow(NotFoundHttpException::class)->during('__invoke', [$request, '1']);
     }
 
     function it_handles_request_and_redirects_to_wishlist(
@@ -78,7 +71,6 @@ final class RemoveProductFromWishlistActionSpec extends ObjectBehavior
         FlashBagInterface $flashBag,
         UrlGeneratorInterface $urlGenerator
     ): void {
-        $request->get('productId')->willReturn(1);
         $productRepository->find(1)->willReturn($product);
         $wishlistContext->getWishlist($request)->willReturn($wishlist);
         $wishlist->getWishlistProducts()->willReturn(new ArrayCollection([$wishlistProduct->getWrappedObject()]));
@@ -90,6 +82,6 @@ final class RemoveProductFromWishlistActionSpec extends ObjectBehavior
         $wishlistProductManager->flush()->shouldBeCalled();
         $flashBag->add('success', 'Product has been removed from your wishlist.')->shouldBeCalled();
 
-        $this->__invoke($request)->shouldHaveType(RedirectResponse::class);
+        $this->__invoke($request, '1')->shouldHaveType(RedirectResponse::class);
     }
 }

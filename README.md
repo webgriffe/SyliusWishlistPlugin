@@ -1,139 +1,180 @@
-# [![](https://bitbag.io/wp-content/uploads/2021/01/wishlist.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_wishlist)
-
-# BitBag SyliusWishlistPlugin
-
-----
-
-[ ![](https://img.shields.io/packagist/l/bitbag/wishlist-plugin.svg) ](https://packagist.org/packages/bitbag/wishlist-plugin "License")
-[ ![](https://img.shields.io/packagist/v/bitbag/wishlist-plugin.svg) ](https://packagist.org/packages/bitbag/wishlist-plugin "Version")
-[ ![](https://img.shields.io/travis/BitBagCommerce/SyliusWishlistPlugin/master.svg) ](http://travis-ci.org/BitBagCommerce/SyliusWishlistPlugin "Build status")
-[ ![](https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusWishlistPlugin.svg) ](https://scrutinizer-ci.com/g/BitBagCommerce/SyliusWishlistPlugin/ "Scrutinizer")
-[ ![](https://poser.pugx.org/bitbag/wishlist-plugin/downloads)](https://packagist.org/packages/bitbag/wishlist-plugin "Total Downloads")
-[ ![Slack](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)](http://sylius-devs.slack.com)
-[ ![Support](https://img.shields.io/badge/support-contact%20author-blue])](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_wishlist)
-
-<p>
- <img align="left" src="https://sylius.com/assets/badge-approved-by-sylius.png" width="85">
+<p align="center">
+    <a href="https://www.webgriffe.com" target="_blank">
+        <img src="https://sylius.com/wp-content/uploads/2018/08/webgriffe_logo.png" height="120" />
+    </a>
 </p>
+<h1 align="center">Sylius Wishlist Plugin</h1>
 
-At BitBag we do believe in open source. However, we are able to do it just because of our awesome clients, who are kind enough to share some parts of our work with the community. Therefore, if you feel like there is a possibility for us to work  together, feel free to reach out. You will find out more about our professional services, technologies, and contact details at [https://bitbag.io/](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_wishlist).
+<p align="center"><a href="https://sylius.com/plugins/" target="_blank"><img src="https://sylius.com/assets/badge-approved-by-sylius.png" width="200"></a></p>
+<p align="center"><a href="https://github.com/webgriffe/SyliusWishlistPlugin/actions"><img src="https://github.com/webgriffe/SyliusWishlistPlugin/workflows/Build/badge.svg" alt="Build Status" /></a></p>
 
-Like what we do? Want to join us? Check out our job listings on our [career page](https://bitbag.io/career/?utm_source=github&utm_medium=referral&utm_campaign=career). Not familiar with Symfony & Sylius yet, but still want to start with us? Join our [academy](https://bitbag.io/pl/akademia?utm_source=github&utm_medium=url&utm_campaign=akademia)!
+## Installation
 
-## Table of Content
+1. Require the plugin, as this is a fork of the original plugin, you have to require it by using the following command:
+   
+   ```bash
+   composer config repositories.bitbag/wishlist-plugin git https://github.com/webgriffe/SyliusWishlistPlugin.git
+   ```
 
-***
+   ```bash
+   composer require bitbag/wishlist-plugin
+   ```
 
-* [Overview](#overview)
-* [Support](#we-are-here-to-help)
-* [About us](#about-us)
-    * [Community](#community)
-* [Demo](#demo-sylius-shop)
-* [License](#license)
-* [Contact](#contact)
+2. If they has not been added automatically, you have to add this bundle to `config/bundles.php` file:
 
-# Overview
+   ```php
+   BitBag\SyliusWishlistPlugin\BitBagSyliusWishlistPlugin::class => ['all' => true],
+   ```
 
-----
-This plugin allows you to integrate wishlist features with Sylius platform app.
+3. Add the plugin's configs by creating the `config/packages/bitbag_wishlist_plugin.yaml` file with the following content:
 
-- [Installation](./doc/01-installation.md)
-- [Usage](./doc/02-usage.md)
-- [Customization](./doc/03-customization.md)
-- [Development](./doc/04-development.md)
-- [Testing](./doc/05-testing.md)
+   ```yaml
+   imports:
+      - { resource: "@BitBagSyliusWishlistPlugin/config/config.yaml" }
+   ```
 
-## We are here to help
-This **open-source plugin was developed to help the Sylius community**. If you have any additional questions, would like help with installing or configuring the plugin, or need any assistance with your Sylius project - let us know!
+4. Add the plugin's routes by creating the `config/routes/bitbag_wishlist_plugin.yaml` file with the following content:
 
-[![](https://bitbag.io/wp-content/uploads/2020/10/button-contact.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_wishlist)
+   ```yaml
+   bitbag_sylius_wishlist_plugin:
+      resource: "@BitBagSyliusWishlistPlugin/config/routes.yaml"
+   ```
 
+5. Run migration
 
-# About us
+   ```bash
+   bin/console cache:clear
+   bin/console doctrine:migrations:migrate
+   ```
 
----
+## Contributing
 
-BitBag is a company of people who **love what they do** and do it right. We fulfill the eCommerce technology stack with **Sylius**, Shopware, Akeneo, and Pimcore for PIM, eZ Platform for CMS, and VueStorefront for PWA. Our goal is to provide real digital transformation with an agile solution that scales with the **clients’ needs**. Our main area of expertise includes eCommerce consulting and development for B2C, B2B, and Multi-vendor Marketplaces.</br>
-We are advisers in the first place. We start each project with a diagnosis of problems, and an analysis of the needs and **goals** that the client wants to achieve.</br>
-We build **unforgettable**, consistent digital customer journeys on top of the **best technologies**. Based on a detailed analysis of the goals and needs of a given organization, we create dedicated systems and applications that let businesses grow.<br>
-Our team is fluent in **Polish, English, German and, French**. That is why our cooperation with clients from all over the world is smooth.
+To contribute you need to:
 
-**Some numbers from BitBag regarding Sylius:**
-- 50+ **experts** including consultants, UI/UX designers, Sylius trained front-end and back-end developers,
-- 120+ projects **delivered** on top of Sylius,
-- 25+ **countries** of BitBag’s customers,
-- 4+ **years** in the Sylius ecosystem.
+1. Clone this repository into you development environment and go to the plugin's root directory,
 
-**Our services:**
-- Business audit/Consulting in the field of **strategy** development,
-- Data/shop **migration**,
-- Headless **eCommerce**,
-- Personalized **software** development,
-- **Project** maintenance and long term support,
-- Technical **support**.
+2. Then, from the plugin's root directory, run the following commands:
 
-**Key clients:** Mollie, Guave, P24, Folkstar, i-LUNCH, Elvi Project, WestCoast Gifts.
+   ```bash
+   composer install
+   ```
 
----
+3. Copy `tests/TestApplication/.env` in `tests/TestApplication/.env.local` and set configuration specific for your development environment.
 
-If you need some help with Sylius development, don't be hesitated to contact us directly. You can fill the form on [this site](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_wishlist) or send us an e-mail at hello@bitbag.io!
+4. Link node_modules:
 
----
+    ```bash
+    ln -s vendor/sylius/test-application/node_modules node_modules
+    ```
 
-[![](https://bitbag.io/wp-content/uploads/2021/08/sylius-badges-transparent-wide.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_wishlist)
+5. Run docker (create a `compose.override.yml` if you need to customize services):
 
-## Community
+    ```bash
+    docker-compose up -d
+    ```
 
-----
+6. Then, from the plugin's root directory, run the following commands:
 
-For online communication, we invite you to chat with us & other users on [Sylius Slack](https://sylius-devs.slack.com/).
+    ```bash
+    composer test-app-init
+    ```
 
-# Demo Sylius Shop
+7. Run your local server:
 
----
+      ```bash
+      symfony server:ca:install
+      symfony server:start -d
+      ```
 
-We created a demo app with some useful use-cases of plugins!
-Visit [sylius-demo.bitbag.io](https://sylius-demo.bitbag.io/) to take a look at it. The admin can be accessed under
-[sylius-demo.bitbag.io/admin/login](https://sylius-demo.bitbag.io/admin/login) link and `bitbag: bitbag` credentials.
-Plugins that we have used in the demo:
+8. Now at http://localhost:8080/ you have a full Sylius testing application which runs the plugin
 
-| BitBag's Plugin | GitHub | Sylius' Store|
-| ------ | ------ | ------|
-| ACL Plugin | *Private. Available after the purchasing.*| https://plugins.sylius.com/plugin/access-control-layer-plugin/|
-| Braintree Plugin | https://github.com/BitBagCommerce/SyliusBraintreePlugin |https://plugins.sylius.com/plugin/braintree-plugin/|
-| CMS Plugin | https://github.com/BitBagCommerce/SyliusCmsPlugin | https://plugins.sylius.com/plugin/cmsplugin/|
-| Elasticsearch Plugin | https://github.com/BitBagCommerce/SyliusElasticsearchPlugin | https://plugins.sylius.com/plugin/2004/|
-| Mailchimp Plugin | https://github.com/BitBagCommerce/SyliusMailChimpPlugin | https://plugins.sylius.com/plugin/mailchimp/ |
-| Multisafepay Plugin | https://github.com/BitBagCommerce/SyliusMultiSafepayPlugin |
-| Wishlist Plugin | https://github.com/BitBagCommerce/SyliusWishlistPlugin | https://plugins.sylius.com/plugin/wishlist-plugin/|
-| **Sylius' Plugin** | **GitHub** | **Sylius' Store** |
-| Admin Order Creation Plugin | https://github.com/Sylius/AdminOrderCreationPlugin | https://plugins.sylius.com/plugin/admin-order-creation-plugin/ |
-| Invoicing Plugin | https://github.com/Sylius/InvoicingPlugin | https://plugins.sylius.com/plugin/invoicing-plugin/ |
-| Refund Plugin | https://github.com/Sylius/RefundPlugin | https://plugins.sylius.com/plugin/refund-plugin/ |
+### Static checks
 
-**If you need an overview of Sylius' capabilities, schedule a consultation with our expert.**
+  - Coding Standard
+    ```bash
+    vendor/bin/ecs check --fix
+    ```
 
-[![](https://bitbag.io/wp-content/uploads/2020/10/button_free_consulatation-1.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_wishlist)
+  - Psalm
+  
+    ```bash
+    vendor/bin/psalm
+    ```
 
-## Additional resources for developers
+  - PHPStan
 
----
-To learn more about our contribution workflow and more, we encourage you to use the following resources:
-* [Sylius Documentation](https://docs.sylius.com/en/latest/)
-* [Sylius Contribution Guide](https://docs.sylius.com/en/latest/contributing/)
-* [Sylius Online Course](https://sylius.com/online-course/)
+    ```bash
+    vendor/bin/phpstan analyse
+    ```
+
+### Testing
+
+After your changes you must ensure that the tests are still passing.
+
+First setup your test database:
+
+```bash
+    APP_ENV=test vendor/bin/console doctrine:database:create
+    APP_ENV=test vendor/bin/console doctrine:migrations:migrate -n
+    # Optionally load data fixtures
+    APP_ENV=test vendor/bin/console sylius:fixtures:load -n
+```
+
+And build assets:
+
+```bash
+    (cd vendor/sylius/test-application && yarn install)
+    (cd vendor/sylius/test-application && yarn build)
+    vendor/bin/console assets:install
+```
+
+The current CI suite runs the following tests:
+
+  - PHPUnit
+
+    ```bash
+    vendor/bin/phpunit
+    ```
+
+  - PHPSpec
+
+    ```bash
+    vendor/bin/phpspec run
+    ```
+
+  - Behat (non-JS scenarios)
+
+    ```bash
+    vendor/bin/behat --strict --tags="~@javascript"
+    ```
+
+  - Behat (JS scenarios)
+
+    1. [Install Symfony CLI command](https://symfony.com/download).
+
+    2. Start Headless Chrome:
+    
+      ```bash
+      google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1
+      ```
+    
+    3. Install SSL certificates (only once needed) and run test application's webserver on `127.0.0.1:8080`:
+    
+      ```bash
+      symfony server:ca:install
+      APP_ENV=test symfony server:start --port=8080 --dir=tests/TestApplication/public --daemon
+      ```
+    
+    4. Run Behat:
+    
+      ```bash
+      vendor/bin/behat --strict --tags="@javascript"
+      ```
 
 ## License
 
----
+This library is under the MIT license. See the complete license in the LICENSE file.
 
-This plugin's source code is completely free and released under the terms of the MIT license.
+## Credits
 
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen.)
-
-## Contact
-
----
-If you want to contact us, the best way is to fill the form on [our website](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_wishlist) or send us an e-mail to hello@bitbag.io with your question(s). We guarantee that we answer as soon as we can!
-
-[![](https://bitbag.io/wp-content/uploads/2021/08/badges-bitbag.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_wishlist)
+Developed by [Webgriffe®](http://www.webgriffe.com/).

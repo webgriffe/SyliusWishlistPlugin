@@ -1,0 +1,63 @@
+services:
+    _defaults: { public: true }
+
+    bitbag_sylius_cms_plugin.behat.context.setup.wishlist:
+        class: Tests\BitBag\SyliusWishlistPlugin\Behat\Context\Setup\WishlistContext
+        arguments:
+            - "@sylius.repository.product"
+            - "@bitbag_sylius_wishlist_plugin.context.wishlist"
+            - "@bitbag_sylius_wishlist_plugin.factory.wishlist_product"
+            - "@bitbag_sylius_wishlist_plugin.manager.wishlist"
+            - "@sylius.factory.taxon"
+            - "@sylius.factory.product_taxon"
+            - "@sylius.manager.product_taxon"
+            - "@sylius.behat.cookie_setter"
+            - "%wishlist_cookie_token%"
+            - "@bitbag_sylius_wishlist_plugin.factory.wishlist"
+
+    bitbag_sylius_cms_plugin.behat.context.ui.wishlist:
+        class: Tests\BitBag\SyliusWishlistPlugin\Behat\Context\Ui\WishlistContext
+        arguments:
+            - "@sylius.repository.product"
+            - "@bitbag_sylius_cms_plugin.behat.page.shop.product_index"
+            - "@bitbag_sylius_cms_plugin.behat.page.shop.product_show"
+            - "@bitbag_sylius_cms_plugin.behat.page.shop.wishlist"
+            - "@sylius.behat.notification_checker.shop"
+            - "@bitbag_sylius_cms_plugin.behat.wishlist_creator"
+            - "@sylius.behat.shared_storage"
+
+    bitbag_sylius_cms_plugin.behat.page.shop.wishlist:
+        class: Tests\BitBag\SyliusWishlistPlugin\Behat\Page\Shop\WishlistPage
+        parent: sylius.behat.symfony_page
+        public: false
+
+    bitbag_sylius_cms_plugin.behat.page.shop.product_index:
+        class: Tests\BitBag\SyliusWishlistPlugin\Behat\Page\Shop\ProductIndexPage
+        parent: sylius.behat.page.shop.product.index
+        public: false
+
+    bitbag_sylius_cms_plugin.behat.page.shop.product_show:
+        class: Tests\BitBag\SyliusWishlistPlugin\Behat\Page\Shop\ProductShowPage
+        parent: sylius.behat.page.shop.product.show
+        public: false
+
+    bitbag_sylius_cms_plugin.behat.loginer:
+        class: Tests\BitBag\SyliusWishlistPlugin\Behat\Service\Loginer
+        arguments:
+            - "@sylius.factory.customer"
+            - "@sylius.factory.shop_user"
+            - "@sylius.repository.shop_user"
+            - "@sylius.behat.page.shop.account.login"
+            - "@sylius.behat.page.shop.home"
+
+    bitbag_sylius_cms_plugin.behat.wishlist_creator:
+        class: Tests\BitBag\SyliusWishlistPlugin\Behat\Service\WishlistCreator
+        arguments:
+            - "@bitbag_sylius_wishlist_plugin.factory.wishlist"
+            - "@bitbag_sylius_wishlist_plugin.factory.wishlist_product"
+            - "@bitbag_sylius_wishlist_plugin.repository.wishlist"
+
+    bitbag_wishlist_plugin.http_client:
+        class: GuzzleHttp\Client
+        arguments:
+            - http_errors: false

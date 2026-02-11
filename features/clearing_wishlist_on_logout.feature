@@ -11,7 +11,8 @@ Feature: Clearing wishlist on logout
     Scenario: Clearing wishlist on logout
         Given the store has a product "Jack Daniels Gentleman" priced at "$10.00"
         And I have this product in my wishlist
-        When I log in
+        And I logged in as "shop@example.com"
+        When I visit this channel's homepage
         And I log out
         And I go to the wishlist page
         And I should have 0 products in my wishlist

@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Form\Type;
@@ -15,49 +9,49 @@ use Doctrine\Common\Collections\Collection;
 use Sylius\Bundle\CoreBundle\Form\Type\Order\AddToCartType;
 use Sylius\Bundle\OrderBundle\Factory\AddToCartCommandFactoryInterface;
 use Sylius\Component\Core\Factory\CartItemFactoryInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @psalm-suppress MissingTemplateParam
+ */
 final class AddProductsToCartType extends AbstractType
 {
-    private AddToCartCommandFactoryInterface $addToCartCommandFactory;
-
-    private CartItemFactoryInterface $cartItemFactory;
-
-    private OrderItemQuantityModifierInterface $orderItemQuantityModifier;
-
-    /** @var string[] */
-    private array $validationGroups;
-
     public function __construct(
-        AddToCartCommandFactoryInterface $addToCartCommandFactory,
-        CartItemFactoryInterface $cartItemFactory,
-        OrderItemQuantityModifierInterface $orderItemQuantityModifier,
-        array $validationGroups,
+        private AddToCartCommandFactoryInterface $addToCartCommandFactory,
+        private CartItemFactoryInterface $cartItemFactory,
+        private OrderItemQuantityModifierInterface $orderItemQuantityModifier,
+        private array $validationGroups,
     ) {
-        $this->addToCartCommandFactory = $addToCartCommandFactory;
-        $this->cartItemFactory = $cartItemFactory;
-        $this->orderItemQuantityModifier = $orderItemQuantityModifier;
-        $this->validationGroups = $validationGroups;
     }
 
+    #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var WishlistProductInterface $wishlistProduct */
-        foreach ($options['wishlist_products'] as $key => $wishlistProduct) {
+        /** @var iterable $wishlistProducts */
+        $wishlistProducts = $options['wishlist_products'];
+        /**
+         * @var WishlistProductInterface $wishlistProduct
+         * @var string|int $key
+         */
+        foreach ($wishlistProducts as $key => $wishlistProduct) {
             if (is_int($key)) {
                 $key = (string) $key;
             }
+            /** @var OrderInterface $cart */
+            $cart = $options['cart'];
             $builder
                 ->add($key, AddToCartType::class, [
                     'label' => false,
                     'required' => false,
                     'product' => $wishlistProduct->getProduct(),
                     'data' => $this->addToCartCommandFactory->createWithCartAndCartItem(
-                        $options['cart'],
+                        $cart,
                         $this->createCartItem($wishlistProduct),
                     ),
                     'is_wishlist' => true,
@@ -66,6 +60,7 @@ final class AddProductsToCartType extends AbstractType
         }
     }
 
+    #[\Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -79,8 +74,9 @@ final class AddProductsToCartType extends AbstractType
 
     private function createCartItem(WishlistProductInterface $wishlistProduct): OrderItemInterface
     {
-        /** @var OrderItemInterface $cartItem */
-        $cartItem = $this->cartItemFactory->createForProduct($wishlistProduct->getProduct());
+        /** @var ProductInterface $product */
+        $product = $wishlistProduct->getProduct();
+        $cartItem = $this->cartItemFactory->createForProduct($product);
         $cartItem->setVariant($wishlistProduct->getVariant());
 
         $this->orderItemQuantityModifier->modify($cartItem, 0);

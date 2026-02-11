@@ -1,53 +1,41 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Voter;
 
 use BitBag\SyliusWishlistPlugin\Entity\WishlistInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Component\Security\Core\Security;
 
 /**
  * @extends Voter<string, WishlistInterface>
  */
 final class WishlistVoter extends Voter
 {
-    public const UPDATE = 'update';
+    public const string UPDATE = 'update';
 
-    public const DELETE = 'delete';
+    public const string DELETE = 'delete';
 
-    private Security $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
-    protected function supports($attribute, $subject): bool
+    #[\Override]
+    protected function supports(string $attribute, mixed $subject): bool
     {
         $attributes = [
             self::UPDATE,
             self::DELETE,
         ];
 
-        if (!in_array($attribute, $attributes, true) ||
-            !$subject instanceof WishlistInterface) {
-            return false;
-        }
-
-        return true;
+        return in_array($attribute, $attributes, true) && $subject instanceof WishlistInterface;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
+    #[\Override]
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
@@ -68,15 +56,11 @@ final class WishlistVoter extends Voter
 
     public function canUpdate(WishlistInterface $wishlist, ?ShopUserInterface $user): bool
     {
-        if (!$this->security->isGranted('ROLE_USER') && null === $wishlist->getShopUser()) {
+        if (!$this->security->isGranted('ROLE_USER') && !$wishlist->getShopUser() instanceof ShopUserInterface) {
             return true;
         }
 
-        if ($this->security->isGranted('ROLE_USER') && $wishlist->getShopUser() === $user) {
-            return true;
-        }
-
-        return false;
+        return $this->security->isGranted('ROLE_USER') && $wishlist->getShopUser() === $user;
     }
 
     public function canDelete(WishlistInterface $wishlist, ?ShopUserInterface $user): bool

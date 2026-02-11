@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Entity;
@@ -13,65 +7,61 @@ namespace BitBag\SyliusWishlistPlugin\Entity;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
-class WishlistProduct implements WishlistProductInterface
+/**
+ * @psalm-api
+ *
+ * @psalm-suppress MissingConstructor
+ */
+final class WishlistProduct implements WishlistProductInterface
 {
-    protected ?int $id;
+    // @phpstan-ignore-next-line
+    private ?int $id;
 
-    protected WishlistInterface $wishlist;
+    private WishlistInterface $wishlist;
 
-    protected ?ProductInterface $product = null;
+    private ?ProductInterface $product = null;
 
-    protected ?ProductVariantInterface $variant = null;
+    private ?ProductVariantInterface $variant = null;
 
-    protected int $quantity = 0;
-
-    public function __construct()
-    {
-        $this->id = null;
-    }
-
+    #[\Override]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[\Override]
     public function getWishlist(): WishlistInterface
     {
         return $this->wishlist;
     }
 
+    #[\Override]
     public function setWishlist(WishlistInterface $wishlist): void
     {
         $this->wishlist = $wishlist;
     }
 
-    public function getProduct(): ProductInterface
+    #[\Override]
+    public function getProduct(): ?ProductInterface
     {
         return $this->product;
     }
 
-    public function setProduct(ProductInterface $product): void
+    #[\Override]
+    public function setProduct(?ProductInterface $product): void
     {
         $this->product = $product;
     }
 
+    #[\Override]
     public function getVariant(): ?ProductVariantInterface
     {
         return $this->variant;
     }
 
+    #[\Override]
     public function setVariant(?ProductVariantInterface $variant): void
     {
         $this->variant = $variant;
-    }
-
-    public function getQuantity(): int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): void
-    {
-        $this->quantity = $quantity;
     }
 }

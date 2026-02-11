@@ -1,11 +1,5 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace spec\BitBag\SyliusWishlistPlugin\Controller\Action;
@@ -39,7 +33,7 @@ final class RenderHeaderTemplateActionSpec extends ObjectBehavior
     ): void {
         $wishlistContext->getWishlist($request)->willReturn($wishlist);
 
-        $twigEnvironment->render('@BitBagSyliusWishlistPlugin/Common/widget.html.twig', [
+        $twigEnvironment->render('@BitBagSyliusWishlistPlugin/common/widget.html.twig', [
             'wishlist' => $wishlist,
         ])->willReturn('TEMPLATE');
         $this->__invoke($request)->shouldImplement(Response::class);

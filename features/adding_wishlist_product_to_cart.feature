@@ -16,7 +16,8 @@ Feature: Adding wishlist product to cart
         When I go to the wishlist page
         And I select 1 quantity of "Bushmills Black Bush Whiskey" product
         And I add my wishlist products to cart
-        Then I should have "Bushmills Black Bush Whiskey" product in my cart
+        And I see the summary of my cart
+        Then I should see "Bushmills Black Bush Whiskey" with quantity 1 in my cart
 
     @ui
     Scenario: Adding a wishlist product with insufficient stock to cart
@@ -26,4 +27,7 @@ Feature: Adding wishlist product to cart
         When I go to the wishlist page
         And I select 1 quantity of "Jack Daniels Gentleman" product
         And I add my wishlist products to cart
-        Then I should not be notified that "Jack Daniels Gentleman" does not have sufficient stock
+# todo: this actually does not work, there is no notification about insuff stock but the qty input is marked with an error..
+#        Then I should not be notified that "Jack Daniels Gentleman" does not have sufficient stock
+        And I see the summary of my cart
+        Then my cart should be empty

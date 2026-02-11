@@ -1,0 +1,12 @@
+services:
+    bitbag_sylius_wishlist_plugin.twig.component.product.add_to_wishlist:
+        public: true
+        class: BitBag\SyliusWishlistPlugin\Twig\Component\Product\AddToWishlistComponent
+        arguments:
+            - '@bitbag_sylius_wishlist_plugin.processor.add_product_variant_to_wishlist'
+            - '@sylius.resolver.product_variant.default'
+            - '@sylius.repository.product'
+            - '@sylius.repository.product_variant'
+        tags:
+            - { name: 'sylius.live_component.shop', key: 'sylius_shop:product:add_to_wishlist' }
+

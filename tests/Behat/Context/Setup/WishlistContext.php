@@ -1,68 +1,40 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace Tests\BitBag\SyliusWishlistPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use BitBag\SyliusWishlistPlugin\Context\WishlistContextInterface;
+use BitBag\SyliusWishlistPlugin\Entity\WishlistInterface;
 use BitBag\SyliusWishlistPlugin\Entity\WishlistProductInterface;
 use BitBag\SyliusWishlistPlugin\Factory\WishlistProductFactoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Behat\Service\Setter\CookieSetterInterface;
+use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-final class WishlistContext implements Context
+final readonly class WishlistContext implements Context
 {
-    private ProductRepositoryInterface $productRepository;
-
-    private WishlistContextInterface $wishlistContext;
-
-    private WishlistProductFactoryInterface $wishlistProductFactory;
-
-    private EntityManagerInterface $wishlistManager;
-
-    private FactoryInterface $taxonFactory;
-
-    private FactoryInterface $productTaxonFactory;
-
-    private EntityManagerInterface $productTaxonManager;
-
-    private CookieSetterInterface $cookieSetter;
-
-    private string $wishlistCookieToken;
-
     public function __construct(
-        ProductRepositoryInterface $productRepository,
-        WishlistContextInterface $wishlistContext,
-        WishlistProductFactoryInterface $wishlistProductFactory,
-        EntityManagerInterface $wishlistManager,
-        FactoryInterface $taxonFactory,
-        FactoryInterface $productTaxonFactory,
-        EntityManagerInterface $productTaxonManager,
-        CookieSetterInterface $cookieSetter,
-        string $wishlistCookieToken,
+        private ProductRepositoryInterface $productRepository,
+        private WishlistContextInterface $wishlistContext,
+        private WishlistProductFactoryInterface $wishlistProductFactory,
+        private EntityManagerInterface $wishlistManager,
+        private FactoryInterface $taxonFactory,
+        private FactoryInterface $productTaxonFactory,
+        private EntityManagerInterface $productTaxonManager,
+        private CookieSetterInterface $cookieSetter,
+        private string $wishlistCookieToken,
+        private FactoryInterface $wishlistFactory,
     ) {
-        $this->productRepository = $productRepository;
-        $this->wishlistContext = $wishlistContext;
-        $this->wishlistProductFactory = $wishlistProductFactory;
-        $this->wishlistManager = $wishlistManager;
-        $this->taxonFactory = $taxonFactory;
-        $this->productTaxonFactory = $productTaxonFactory;
-        $this->productTaxonManager = $productTaxonManager;
-        $this->cookieSetter = $cookieSetter;
-        $this->wishlistCookieToken = $wishlistCookieToken;
     }
 
     /**
@@ -74,6 +46,27 @@ final class WishlistContext implements Context
         $product = $this->productRepository->findOneBy([]);
 
         $this->addProductToWishlist($product);
+    }
+
+    /**
+     * @Given I have product :product in my wishlist
+     */
+    public function iHaveNamedProductInMyWishlist(ProductInterface $product): void
+    {
+        $this->addProductToWishlist($product);
+    }
+
+    /**
+     * @Given /^(this customer) has product :product in the wishlist$/
+     */
+    public function thisCustomerHasProductInTheWishlist(CustomerInterface $customer, ProductInterface $product): void
+    {
+        $user = $customer->getUser();
+        if (!$user instanceof ShopUserInterface) {
+            throw new \InvalidArgumentException('Customer must have a ShopUser');
+        }
+
+        $this->addProductToWishlistForUser($product, $user);
     }
 
     /**
@@ -116,11 +109,14 @@ final class WishlistContext implements Context
 
     private function addProductToWishlist(ProductInterface $product): void
     {
+        /** @var WishlistInterface $wishlist */
         $wishlist = $this->wishlistContext->getWishlist(new Request());
         /** @var WishlistProductInterface $wishlistProduct */
         $wishlistProduct = $this->wishlistProductFactory->createNew();
         $wishlistProduct->setProduct($product);
-        $wishlistProduct->setVariant($product->getVariants()->first());
+        /** @var ProductVariantInterface $variant */
+        $variant = $product->getVariants()->first();
+        $wishlistProduct->setVariant($variant);
 
         $wishlist->addWishlistProduct($wishlistProduct);
 
@@ -128,5 +124,24 @@ final class WishlistContext implements Context
         $this->wishlistManager->flush();
 
         $this->cookieSetter->setCookie($this->wishlistCookieToken, $wishlist->getToken());
+    }
+
+    private function addProductToWishlistForUser(ProductInterface $product, ShopUserInterface $user): void
+    {
+        /** @var WishlistInterface $wishlist */
+        $wishlist = $this->wishlistFactory->createNew();
+        $wishlist->setShopUser($user);
+
+        /** @var WishlistProductInterface $wishlistProduct */
+        $wishlistProduct = $this->wishlistProductFactory->createNew();
+        $wishlistProduct->setProduct($product);
+        /** @var ProductVariantInterface $variant */
+        $variant = $product->getVariants()->first();
+        $wishlistProduct->setVariant($variant);
+
+        $wishlist->addWishlistProduct($wishlistProduct);
+
+        $this->wishlistManager->persist($wishlist);
+        $this->wishlistManager->flush();
     }
 }

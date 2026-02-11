@@ -1,0 +1,62 @@
+services:
+    bitbag_sylius_wishlist_plugin.controller.action.add_product_to_wishlist:
+        class: BitBag\SyliusWishlistPlugin\Controller\Action\AddProductToWishlistAction
+        arguments:
+            - "@security.token_storage"
+            - "@sylius.repository.product"
+            - "@bitbag_sylius_wishlist_plugin.context.wishlist"
+            - "@bitbag_sylius_wishlist_plugin.factory.wishlist_product"
+            - "@bitbag_sylius_wishlist_plugin.manager.wishlist"
+            - "@request_stack"
+            - "@translator"
+            - "@router"
+            - "%wishlist_cookie_token%"
+        tags:
+            - { name: controller.service_arguments }
+
+    bitbag_sylius_wishlist_plugin.controller.action.remove_product_from_wishlist:
+        class: BitBag\SyliusWishlistPlugin\Controller\Action\RemoveProductFromWishlistAction
+        arguments:
+            - "@bitbag_sylius_wishlist_plugin.context.wishlist"
+            - "@sylius.repository.product"
+            - "@bitbag_sylius_wishlist_plugin.manager.wishlist_product"
+            - "@request_stack"
+            - "@translator"
+            - "@router"
+        tags:
+            - { name: controller.service_arguments }
+
+    bitbag_sylius_wishlist_plugin.controller.action.remove_product_variant_from_wishlist:
+        class: BitBag\SyliusWishlistPlugin\Controller\Action\RemoveProductVariantFromWishlistAction
+        arguments:
+            - "@bitbag_sylius_wishlist_plugin.context.wishlist"
+            - "@sylius.repository.product_variant"
+            - "@bitbag_sylius_wishlist_plugin.manager.wishlist_product"
+            - "@request_stack"
+            - "@translator"
+            - "@router"
+        tags:
+            - { name: controller.service_arguments }
+
+
+    bitbag_sylius_wishlist_plugin.controller.action.list_wishlist_products:
+        class: BitBag\SyliusWishlistPlugin\Controller\Action\ListWishlistProductsAction
+        arguments:
+            - "@bitbag_sylius_wishlist_plugin.context.wishlist"
+            - "@sylius.context.cart"
+            - "@form.factory"
+            - "@sylius.modifier.order"
+            - "@sylius.manager.order"
+            - "@request_stack"
+            - "@translator"
+            - "@twig"
+        tags:
+            - { name: controller.service_arguments }
+
+    bitbag_sylius_wishlist_plugin.controller.action.render_header_template:
+        class: BitBag\SyliusWishlistPlugin\Controller\Action\RenderHeaderTemplateAction
+        arguments:
+            - "@bitbag_sylius_wishlist_plugin.context.wishlist"
+            - "@twig"
+        tags:
+            - { name: controller.service_arguments }

@@ -1,40 +1,41 @@
 <?php
 
-/*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
-
 declare(strict_types=1);
 
 namespace BitBag\SyliusWishlistPlugin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
+/**
+ * @psalm-api
+ */
 interface WishlistInterface extends ResourceInterface
 {
     /**
-     * @return Collection|ProductInterface[]
+     * @return ArrayCollection<array-key, ProductInterface>
      */
-    public function getProducts(): Collection;
+    public function getProducts(): ArrayCollection;
 
     /**
-     * @return Collection|ProductVariantInterface[]
+     * @return ArrayCollection<array-key, ProductVariantInterface>
      */
-    public function getProductVariants(): Collection;
+    public function getProductVariants(): ArrayCollection;
 
     public function hasProductVariant(ProductVariantInterface $productVariant): bool;
 
     /**
-     * @return Collection|WishlistProductInterface[]
+     * @return Collection<array-key, WishlistProductInterface>
      */
     public function getWishlistProducts(): Collection;
 
+    /**
+     * @param Collection<array-key, WishlistProductInterface> $wishlistProducts
+     */
     public function setWishlistProducts(Collection $wishlistProducts): void;
 
     public function hasProduct(ProductInterface $product): bool;
@@ -45,13 +46,13 @@ interface WishlistInterface extends ResourceInterface
 
     public function getShopUser(): ?ShopUserInterface;
 
-    public function setShopUser(ShopUserInterface $shopShopUser): void;
+    public function setShopUser(ShopUserInterface $shopUser): void;
 
     public function getToken(): string;
 
     public function setToken(string $token): void;
 
-    public function removeProduct(WishlistProductInterface $product): self;
+    public function removeProduct(WishlistProductInterface $product): void;
 
-    public function removeProductVariant(ProductVariantInterface $variant): self;
+    public function removeProductVariant(ProductVariantInterface $variant): void;
 }

@@ -1,9 +1,0 @@
-<div class="ui basic segment">
-    <div class="ui three column stackable grid">
-        {{ sylius_template_event('sylius.shop.layout.header.grid') }}
-        <div class="right aligned column">
-            {{ render(url('bitbag_sylius_wishlist_plugin_shop_wishlist_render_header_template')) }}
-            {{ render(url('sylius_shop_partial_cart_summary', {'template': '@SyliusShop/Cart/_widget.html.twig'})) }}
-        </div>
-    </div>
-</div>

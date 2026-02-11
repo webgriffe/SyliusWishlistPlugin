@@ -1,0 +1,15 @@
+bitbag_sylius_wishlist_plugin:
+    ui:
+        wishlist: Lista życzeń
+        add_to_wishlist: Dodaj do listy życzeń
+        remove_from_wishlist: Usuń z listy życzeń
+        your_wishlist_is_empty: Twoja lista życzeń jest pusta
+        added_wishlist_item: Produkt został dodany do listy życzeń.
+        removed_wishlist_item: Produkt został usunięty z listy życzeń.
+        add_items_to_cart: Dodaj produkty z listy życzeń do koszyka
+        added_to_cart: Produkty z listy życzeń zostały dodane do koszyka.
+        save_wishlist: Zapisz listę życzeń
+        variant_not_unique: Ten wariant jest już na Twojej liście życzeń
+        increase_quantity: Zwiększ ilość przynajmniej jednego z produktów.
+        wishlist_has_product_variant: 'Wariant %productName% jest już na liście życzeń.'
+        your_wishlist: Twoja lista życzeń

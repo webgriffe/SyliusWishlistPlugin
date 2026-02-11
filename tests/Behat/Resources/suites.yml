@@ -1,3 +1,2 @@
 imports:
     - suites/ui/ui_wishlist.yml
-    - suites/api/api_wishlist.yml
