@@ -10,7 +10,42 @@
 
 ## Installation
 
-TODO
+1. Require the plugin, as this is a fork of the original plugin, you have to require it by using the following command:
+   
+   ```bash
+   composer config repositories.bitbag/wishlist-plugin git https://github.com/webgriffe/SyliusWishlistPlugin.git
+   ```
+
+   ```bash
+   composer require bitbag/wishlist-plugin
+   ```
+
+2. If they has not been added automatically, you have to add this bundle to `config/bundles.php` file:
+
+   ```php
+   BitBag\SyliusWishlistPlugin\BitBagSyliusWishlistPlugin::class => ['all' => true],
+   ```
+
+3. Add the plugin's configs by creating the `config/packages/bitbag_wishlist_plugin.yaml` file with the following content:
+
+   ```yaml
+   imports:
+      - { resource: "@BitBagSyliusWishlistPlugin/config/config.yaml" }
+   ```
+
+4. Add the plugin's routes by creating the `config/routes/bitbag_wishlist_plugin.yaml` file with the following content:
+
+   ```yaml
+   bitbag_sylius_wishlist_plugin:
+      resource: "@BitBagSyliusWishlistPlugin/config/routes.yaml"
+   ```
+
+5. Run migration
+
+   ```bash
+   bin/console cache:clear
+   bin/console doctrine:migrations:migrate
+   ```
 
 ## Contributing
 
