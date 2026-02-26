@@ -15,7 +15,7 @@ use Sylius\Component\Core\Model\ShopUserInterface;
  *
  * @psalm-suppress PropertyNotSetInConstructor
  */
-final class Wishlist implements WishlistInterface
+class Wishlist implements WishlistInterface
 {
     private ?int $id = null;
 

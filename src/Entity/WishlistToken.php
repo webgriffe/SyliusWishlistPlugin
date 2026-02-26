@@ -9,7 +9,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * @psalm-api
  */
-final class WishlistToken implements WishlistTokenInterface
+class WishlistToken implements WishlistTokenInterface
 {
     private string $value;
 
@@ -18,7 +18,7 @@ final class WishlistToken implements WishlistTokenInterface
         if ($value === null) {
             $this->value = $this->generate();
         } else {
-            $this->setValue($value);
+            $this->value = $value;
         }
     }
 

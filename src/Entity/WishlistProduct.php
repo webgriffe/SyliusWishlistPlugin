@@ -12,7 +12,7 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
  *
  * @psalm-suppress MissingConstructor
  */
-final class WishlistProduct implements WishlistProductInterface
+class WishlistProduct implements WishlistProductInterface
 {
     // @phpstan-ignore-next-line
     private ?int $id;
