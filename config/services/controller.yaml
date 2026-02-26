@@ -10,6 +10,7 @@ services:
             - "@request_stack"
             - "@translator"
             - "@router"
+            - "@event_dispatcher"
             - "%wishlist_cookie_token%"
         tags:
             - { name: controller.service_arguments }
@@ -23,6 +24,7 @@ services:
             - "@request_stack"
             - "@translator"
             - "@router"
+            - "@event_dispatcher"
         tags:
             - { name: controller.service_arguments }
 
@@ -35,6 +37,7 @@ services:
             - "@request_stack"
             - "@translator"
             - "@router"
+            - "@event_dispatcher"
         tags:
             - { name: controller.service_arguments }
 

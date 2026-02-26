@@ -11,6 +11,7 @@ use BitBag\SyliusWishlistPlugin\Factory\WishlistProductFactoryInterface;
 use BitBag\SyliusWishlistPlugin\Repository\WishlistRepositoryInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -20,6 +21,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class AddProductVariantToWishlistProcessor implements AddProductVariantToWishlistProcessorInterface
@@ -32,6 +34,7 @@ final readonly class AddProductVariantToWishlistProcessor implements AddProductV
         private UrlGeneratorInterface $urlGenerator,
         private WishlistRepositoryInterface $wishlistRepository,
         private TokenStorageInterface $tokenStorage,
+        private EventDispatcherInterface $eventDispatcher,
         private string $wishlistCookieToken,
     ) {
     }
@@ -88,7 +91,10 @@ final readonly class AddProductVariantToWishlistProcessor implements AddProductV
         }
 
         $wishlist->addWishlistProduct($wishlistProduct);
+        $this->eventDispatcher->dispatch(new GenericEvent($wishlistProduct), 'bitbag_sylius_wishlist_plugin.wishlist.pre_add');
         $this->wishlistRepository->add($wishlist);
+        $this->eventDispatcher->dispatch(new GenericEvent($wishlistProduct), 'bitbag_sylius_wishlist_plugin.wishlist.post_add');
+
         $flashBag->add('success', $this->translator->trans('bitbag_sylius_wishlist_plugin.ui.added_wishlist_item'));
     }
 

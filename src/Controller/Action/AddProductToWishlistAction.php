@@ -10,6 +10,7 @@ use BitBag\SyliusWishlistPlugin\Factory\WishlistProductFactoryInterface;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class AddProductToWishlistAction
@@ -37,6 +39,7 @@ final readonly class AddProductToWishlistAction
         RequestStack $requestStack,
         private TranslatorInterface $translator,
         private UrlGeneratorInterface $urlGenerator,
+        private EventDispatcherInterface $eventDispatcher,
         private string $wishlistCookieToken,
     ) {
         /** @var FlashBagAwareSessionInterface $session */
@@ -63,7 +66,9 @@ final readonly class AddProductToWishlistAction
             $this->wishlistManager->persist($wishlist);
         }
 
+        $this->eventDispatcher->dispatch(new GenericEvent($wishlistProduct), 'bitbag_sylius_wishlist_plugin.wishlist.pre_add');
         $this->wishlistManager->flush();
+        $this->eventDispatcher->dispatch(new GenericEvent($wishlistProduct), 'bitbag_sylius_wishlist_plugin.wishlist.post_add');
 
         $this->flashBag->add('success', $this->translator->trans('bitbag_sylius_wishlist_plugin.ui.added_wishlist_item'));
 

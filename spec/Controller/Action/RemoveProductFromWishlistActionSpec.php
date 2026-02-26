@@ -11,6 +11,7 @@ use BitBag\SyliusWishlistPlugin\Entity\WishlistProductInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class RemoveProductFromWishlistActionSpec extends ObjectBehavior
@@ -31,6 +33,7 @@ final class RemoveProductFromWishlistActionSpec extends ObjectBehavior
         FlashBagInterface $flashBag,
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
+        EventDispatcherInterface $eventDispatcher,
         RequestStack $requestStack,
         Session $session,
     ): void {
@@ -43,7 +46,8 @@ final class RemoveProductFromWishlistActionSpec extends ObjectBehavior
             $wishlistProductManager,
             $requestStack,
             $translator,
-            $urlGenerator
+            $urlGenerator,
+            $eventDispatcher
         );
     }
 
@@ -69,7 +73,8 @@ final class RemoveProductFromWishlistActionSpec extends ObjectBehavior
         EntityManagerInterface $wishlistProductManager,
         TranslatorInterface $translator,
         FlashBagInterface $flashBag,
-        UrlGeneratorInterface $urlGenerator
+        UrlGeneratorInterface $urlGenerator,
+        EventDispatcherInterface $eventDispatcher,
     ): void {
         $productRepository->find(1)->willReturn($product);
         $wishlistContext->getWishlist($request)->willReturn($wishlist);
@@ -77,6 +82,7 @@ final class RemoveProductFromWishlistActionSpec extends ObjectBehavior
         $wishlistProduct->getProduct()->willReturn($product);
         $translator->trans('bitbag_sylius_wishlist_plugin.ui.removed_wishlist_item')->willReturn('Product has been removed from your wishlist.');
         $urlGenerator->generate('bitbag_sylius_wishlist_plugin_shop_wishlist_list_products')->willReturn('/wishlist');
+        $eventDispatcher->dispatch(Argument::any(), Argument::type('string'))->willReturnArgument(0);
 
         $wishlistProductManager->remove($wishlistProduct)->shouldBeCalled();
         $wishlistProductManager->flush()->shouldBeCalled();

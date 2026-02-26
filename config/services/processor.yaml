@@ -9,4 +9,5 @@ services:
             - "@router"
             - "@bitbag_sylius_wishlist_plugin.repository.wishlist"
             - "@security.token_storage"
+            - "@event_dispatcher"
             - "%wishlist_cookie_token%"

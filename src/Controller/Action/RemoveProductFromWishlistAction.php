@@ -9,6 +9,7 @@ use BitBag\SyliusWishlistPlugin\Entity\WishlistInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class RemoveProductFromWishlistAction
@@ -31,6 +33,7 @@ final readonly class RemoveProductFromWishlistAction
         RequestStack $requestStack,
         private TranslatorInterface $translator,
         private UrlGeneratorInterface $urlGenerator,
+        private EventDispatcherInterface $eventDispatcher,
     ) {
         /** @var FlashBagAwareSessionInterface $session */
         $session = $requestStack->getSession();
@@ -52,11 +55,14 @@ final readonly class RemoveProductFromWishlistAction
 
         foreach ($wishlist->getWishlistProducts() as $wishlistProduct) {
             if ($product === $wishlistProduct->getProduct()) {
+                $this->eventDispatcher->dispatch(new GenericEvent($wishlistProduct), 'bitbag_sylius_wishlist_plugin.wishlist.pre_remove');
                 $this->wishlistProductManager->remove($wishlistProduct);
             }
         }
 
         $this->wishlistProductManager->flush();
+        $this->eventDispatcher->dispatch(new GenericEvent($product, ['wishlist' => $wishlist]), 'bitbag_sylius_wishlist_plugin.wishlist.post_remove');
+
         $this->flashBag->add('success', $this->translator->trans('bitbag_sylius_wishlist_plugin.ui.removed_wishlist_item'));
 
         return new RedirectResponse($this->urlGenerator->generate('bitbag_sylius_wishlist_plugin_shop_wishlist_list_products'));
