@@ -11,8 +11,6 @@ use Sylius\Bundle\OrderBundle\Factory\AddToCartCommandFactoryInterface;
 use Sylius\Component\Core\Factory\CartItemFactoryInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
-use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +23,6 @@ final class AddProductsToCartType extends AbstractType
     public function __construct(
         private AddToCartCommandFactoryInterface $addToCartCommandFactory,
         private CartItemFactoryInterface $cartItemFactory,
-        private OrderItemQuantityModifierInterface $orderItemQuantityModifier,
         private array $validationGroups,
     ) {
     }
@@ -74,12 +71,9 @@ final class AddProductsToCartType extends AbstractType
 
     private function createCartItem(WishlistProductInterface $wishlistProduct): OrderItemInterface
     {
-        /** @var ProductInterface $product */
-        $product = $wishlistProduct->getProduct();
-        $cartItem = $this->cartItemFactory->createForProduct($product);
+        /** @var OrderItemInterface $cartItem */
+        $cartItem = $this->cartItemFactory->createNew();
         $cartItem->setVariant($wishlistProduct->getVariant());
-
-        $this->orderItemQuantityModifier->modify($cartItem, 0);
 
         return $cartItem;
     }

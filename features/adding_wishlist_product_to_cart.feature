@@ -20,6 +20,19 @@ Feature: Adding wishlist product to cart
         Then I should see "Bushmills Black Bush Whiskey" with quantity 1 in my cart
 
     @ui
+    Scenario: Adding to cart only wishlist products with a selected quantity
+        Given the store has a product "Jack Daniels Gentleman" priced at "$10.00"
+        And the store has a product "Bushmills Black Bush Whiskey" priced at "$230.00"
+        And the store has a product "Jameson Irish Whiskey" priced at "$25.00"
+        And I have these products in my wishlist
+        When I go to the wishlist page
+        And I select 2 quantity of "Bushmills Black Bush Whiskey" product
+        And I add my wishlist products to cart
+        And I see the summary of my cart
+        Then there should be one item in my cart
+        And I should see "Bushmills Black Bush Whiskey" with quantity 2 in my cart
+
+    @ui
     Scenario: Adding a wishlist product with insufficient stock to cart
         Given the store has a product "Jack Daniels Gentleman" priced at "$10.00"
         And the product "Jack Daniels Gentleman" is out of stock
